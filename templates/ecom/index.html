@@ -152,7 +152,7 @@ body {
   /* ease-out */
   width: 660px;
   height: 100%;
-  background-color: #3fcd7f;
+  background-color: #00fff2;
   position: absolute;
   left: -659px;
 }
@@ -327,11 +327,11 @@ img {
   max-width: 100%;
 }
 
-.slider-container{
+.slider-container {
   height: 35%;
   width: 100%;
   position: relative;
-  overflow: hidden; 
+  overflow: hidden;
   text-align: center;
 }
 
@@ -349,11 +349,21 @@ img {
   width: 16px;
   height: 16px;
   background: #fff;
-  border-radius: 50px;
+  border-radius: 50%;
   margin: 0 .2em 1em;
-  &:hover {
-    background: red;
-  }
+  transition: background 0.3s;
+}
+
+.menu label:hover,
+[id^="slide"]:checked + .menu label[for="slide-dot-1"] {
+  background: red;
+}
+
+#slide-dot-1:checked ~ .menu label[for="slide-dot-1"],
+#slide-dot-2:checked ~ .menu label[for="slide-dot-2"],
+#slide-dot-3:checked ~ .menu label[for="slide-dot-3"],
+#slide-dot-4:checked ~ .menu label[for="slide-dot-4"] {
+  background: red;
 }
 
 .slide {
@@ -387,6 +397,7 @@ img {
 .slide-4 {
   background-image: url("{% static 'images/ecom-banner3.jpg' %}");
 }
+
   </style>
 
 <div class="row">
@@ -418,14 +429,14 @@ img {
 <br>
 
 <!-- products data starttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt -->
-  <div class="row">
+  <div class="row" >
 
       {% for p in products %}
       <!-- card1 -->
-      <div class="column">
+      <div class="column" >
       <div class="container page-wrapper" style="width: 450px;">
         <div class="page-inner">
-          <div class="row">
+          <div class="row" >
             <div class="el-wrapper">
               <div class="box-up">
                 <img class="img" src="{% static p.product_image.url %}" alt="product pic" height="300px" width="300px">
