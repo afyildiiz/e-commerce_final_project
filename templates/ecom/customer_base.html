@@ -29,22 +29,42 @@ body {
 }
 
 .navbar-input {
-    padding: 11px 16px;
-    border-radius: 2px 0 0 2px;
-    border: 0 none;
-    outline: 0 none;
-    font-size: 15px
-}
+      padding: 11px 16px;
+      border-radius: 2px 0 0 2px;
+      border: 0 none;
+      outline: 0 none;
+      font-size: 15px;
+      transition: 0.3s ease all;
+  }
+  .navbar-input:hover{
+    scale: 1.01;
+    border-radius: 7px;
+  }
 
-.navbar-button {
-    background-color: #e5bc41;
-    border: 1px solid #e5bc41;
-    border-radius: 0 2px 2px 0;
-    color: #565656;
-    padding: 10px 0;
-    height: 43px;
-    cursor: pointer
-}
+  .navbar-button {
+      background-color: #e5bc41;
+      border: 1px solid #e5bc41;
+      border-radius: 0 2px 2px 0;
+      color: #565656;
+      padding: 10px 0;
+      height: 43px;
+      cursor: pointer
+  }
+
+  /* .navbar-button svg{
+    transition: 0.3s ease all;
+  } */
+  .navbar-button{
+    transition: 0.7s ease all;
+  }
+  .navbar-button:hover{
+    scale: 1.02;
+    background-color: rgb(0, 255, 0);
+  }
+
+  /* .navbar-button svg:hover{
+    scale: 1.1;
+  } */
 
 .cart-button {
     /* background-color: #bfbfbf; */
@@ -61,12 +81,15 @@ body {
     text-decoration: none;
     color: inherit;
     border: none;
-    outline: none
+    outline: none;
+    transition: 0.7s ease all;
 }
 
 .cart-button:hover {
     text-decoration: none;
     color: #fff;
+    background-color: #008cff;
+    scale: 1.01;
     cursor: pointer
 }
 
@@ -250,7 +273,7 @@ body {
 </head>
 <body>
 <div id="navbar">
-    <div class="container">
+    <div class="">
         <div class="row row1">
             <ul class="largenav pull-right">
 
@@ -262,7 +285,7 @@ body {
         </div>
         <div class="row row2">
             <div class="col-sm-3">
-                <h2 style="margin:0px;"><a style="text-decoration:none; color:white;" href="/"><span class="largenav"><img src="../../static/images/logo.png" style="margin-bottom: 20px;" width="150px" alt=""> </span></a></h2>
+                <h2 style="margin:0px;"><a style="text-decoration:none; color:white;" href="/"><span style="margin-left: 10%;" class="largenav"><img src="../../static/images/logo.png" style="margin-top:-20px" width="150px" alt=""> </span></a></h2>
             </div>
 
             <div class="navbar-search smallsearch col-sm-7 col-xs-11">
@@ -306,7 +329,7 @@ body {
       <div class="col-md-12 col-sm-12">
         <div style="color:#ffffff;" class="wow fadeInUp footer-copyright">
           <p>Ecommerce Site in Python using Django Framework<br>
-            &copy; 2022 Developed By DOU </p>
+            &copy; 2024 Developed By DOU </p>
         </div>
       </div>
     </div>

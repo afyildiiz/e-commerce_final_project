@@ -5,6 +5,22 @@
 
 
   <style media="screen">
+body {
+  position: relative;
+  background: none; /* Remove the default background */
+}
+
+body::before {
+  content: '';
+  position: fixed; /* Use fixed to cover the entire viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("{% static 'images/background.jpg' %}") center center;
+  opacity: 0.3; /* Adjust the opacity as needed */
+  z-index: -1; /* Ensure it is behind all other content */
+}
 .wrapper {
   width: 400px;
   height: 400px;
@@ -140,7 +156,7 @@
 }
 .wrapper .inside {
   z-index: 9;
-  background: #92879B;
+  background: #000000;
   width: 140px;
   height: 140px;
   position: absolute;
@@ -255,13 +271,7 @@ img {
   max-width: 100%;
 }
 
-.slider-container{
-  height: 35%;
-  width: 100%;
-  position: relative;
-  overflow: hidden; 
-  text-align: center;
-}
+
 
 .menu {
   position: absolute;
@@ -304,18 +314,36 @@ img {
 }
 
 .slide-1 {
-  background-image: url("{% static 'images/banner1.jpg' %}");
+  background-image: url("{% static 'images/resized_image.png' %}");
 }
 .slide-2 {
-  background-image: url("{% static 'images/a.png' %}");
+  background-image: url("{% static 'images/banner2.jpg' %}");
 }
 .slide-3 {
-  background-image: url("{% static 'images/b.png' %}");
+  background-image: url("{% static 'images/banner3.png' %}");
 }
 .slide-4 {
-  background-image: url("{% static 'images/ecom-banner3.jpg' %}");
+  background-image: url("{% static 'images/banner4.png' %}");
+}
+
+.slider-container{
+  height: 35%;
+  width: 100%;
+  position: relative;
+  overflow: hidden; 
+  text-align: center;
+  border: 2px solid rgb(124, 124, 124);
+  box-shadow: 3px 3px 3px 3px;
+}
+
+.slidecontainer{
+  margin-top: 1rem;
+  padding: 34px;
+
 }
   </style>
+
+<div class="slidecontainer">
 
 <div class="row">
   <div class="col-md-12">
@@ -339,6 +367,7 @@ img {
         <div class="slide slide-4"></div>
     </div>
   </div>
+</div>
 </div>
 
 
