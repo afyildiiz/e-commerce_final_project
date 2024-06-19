@@ -37,67 +37,6 @@ button:hover {
 }
 
 
-
-.button {
-  width: 75px;
-  height: 50px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  background: red;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-  background: #e62222;
- }
- 
- .button, .button span {
-  transition: 200ms;
- }
- 
- .button .text {
-  transform: translateX(35px);
-  color: white;
-  font-weight: bold;
- }
- 
- .button .icon {
-  position: absolute;
-
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
- }
- 
- .button svg {
-  width: 15px;
-  fill: #eee;
- }
- 
- .button:hover {
-  background: #ff3636;
- }
- 
- .button:hover .text {
-  color: transparent;
- }
- 
- .button:hover .icon {
-  width: 75px;
-  border-left: none;
-  transform: translateX(0);
- }
- 
- .button:focus {
-  outline: none;
- }
- 
- .button:active .icon svg {
-  transform: scale(0.8);
- }
-
-
  .main-box {
   width: 51px;
   height: 43px;
@@ -202,7 +141,7 @@ button:hover {
               <thead>
                 <tr>
                   <th scope="col" class="border-0 bg-light">
-                    <div class="p-2 px-3 text-uppercase">Image</div>
+                    <div class="p-2 px-3 text-uppercase"></div>
                   </th>
                   <!-- <th scope="col" class="border-0 bg-light">
                     <div class="py-2 text-uppercase">Name</div>
@@ -226,7 +165,7 @@ button:hover {
                     <div class="p-2">
                       <img src="{% static p.product_image.url %}" alt="Profile Pic" height="50px" width="50px" />
                       <div class="ml-3 d-inline-block align-middle">
-                        <h5 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">{{p.name}}</a></h5><span class="text-muted font-weight-normal font-italic d-block"></span>
+                        <h5 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">{{p.name}} - {{p.category}}</a></h5><span class="text-muted font-weight-normal font-italic d-block"></span>
                       </div>
                     </div>
                   </th>

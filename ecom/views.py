@@ -7,11 +7,6 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from django.contrib import messages
 from django.conf import settings
 
-def product_list_by_category(request, category_id):
-    category = get_object_or_404(Category, id=category_id)
-    products = Product.objects.filter(category=category)
-    return render(request, 'product_list.html', {'category': category, 'products': products})
-
 def add_category_view(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -23,18 +18,22 @@ def add_category_view(request):
     return render(request, 'ecom/admin_add_category.html', {'form': form})
 
 def home_view(request):
-    products=models.Product.objects.all()
+    products = Product.objects.all()
     categories = Category.objects.all()
+    product_count_in_cart = 0
     if 'product_ids' in request.COOKIES:
         product_ids = request.COOKIES['product_ids']
-        counter=product_ids.split('|')
-        product_count_in_cart=len(set(counter))
-    else:
-        product_count_in_cart=0
+        counter = product_ids.split('|')
+        product_count_in_cart = len(set(counter))
     if request.user.is_authenticated:
         return HttpResponseRedirect('afterlogin')
-    return render(request,'ecom/index.html',{'products':products,'product_count_in_cart':product_count_in_cart,'categories': categories})
-    
+    return render(request, 'ecom/index.html', {'products': products, 'product_count_in_cart': product_count_in_cart, 'categories': categories})
+
+def product_list_by_category(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    products = Product.objects.filter(category=category)
+    return render(request, 'ecom/product_list_by_category.html', {'category': category, 'products': products})
+ 
 
 
 #for showing login button for admin(by DOU)
@@ -239,33 +238,38 @@ def search_view(request):
     return render(request,'ecom/index.html',{'products':products,'word':word,'product_count_in_cart':product_count_in_cart})
 
 
-# any one can add product to cart, no need of signin
-def add_to_cart_view(request,pk):
-    products=models.Product.objects.all()
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from . import models
 
-    #for cart counter, fetching products ids added by customer from cookies
+def add_to_cart_view(request, pk):
+    # Sepetteki ürünlerin sayısını ve tüm ürünleri veritabanından alır
+    products = models.Product.objects.all()
+
+    # Sepetteki ürünlerin kimliklerini çerezlerden okur
     if 'product_ids' in request.COOKIES:
         product_ids = request.COOKIES['product_ids']
-        counter=product_ids.split('|')
-        product_count_in_cart=len(set(counter))
+        counter = product_ids.split('|')
+        product_count_in_cart = len(set(counter))
     else:
-        product_count_in_cart=1
+        product_count_in_cart = 0
 
-    response = render(request, 'ecom/index.html',{'products':products,'product_count_in_cart':product_count_in_cart})
-
-    #adding product id to cookies
+    # Ürün kimliğini çerezlere ekler
     if 'product_ids' in request.COOKIES:
         product_ids = request.COOKIES['product_ids']
-        if product_ids=="":
-            product_ids=str(pk)
+        if product_ids == "":
+            product_ids = str(pk)
         else:
-            product_ids=product_ids+"|"+str(pk)
+            product_ids = product_ids + "|" + str(pk)
+        response = redirect('customer-home')  # Ana sayfaya yönlendirir
         response.set_cookie('product_ids', product_ids)
     else:
+        response = redirect('customer-home')  # Ana sayfaya yönlendirir
         response.set_cookie('product_ids', pk)
 
-    product=models.Product.objects.get(id=pk)
-    messages.info(request, product.name + ' added to cart successfully!')
+    # Eklenen ürün hakkında bilgi verir
+    product = models.Product.objects.get(id=pk)
+    messages.info(request, product.name + ' sepete başarıyla eklendi!')
 
     return response
 
@@ -350,6 +354,7 @@ def send_feedback_view(request):
 @login_required(login_url='customerlogin')
 @user_passes_test(is_customer)
 def customer_home_view(request):
+    categories = Category.objects.all()
     products=models.Product.objects.all() #tüm ürünleri veritabanından aldık
     if 'product_ids' in request.COOKIES: # eğer çerezlerde product_ids varsa
         product_ids = request.COOKIES['product_ids'] # yeni bir değişkene idler atanır.
@@ -357,7 +362,7 @@ def customer_home_view(request):
         product_count_in_cart=len(set(counter)) # tekrarları listeden atarak ürün sayısı id üzerinden hesaplanır.
     else: # ürün yoksa da 
         product_count_in_cart=0 # sepetteki ürünleri sıfırla
-    return render(request,'ecom/customer_home.html',{'products':products,'product_count_in_cart':product_count_in_cart})
+    return render(request,'ecom/customer_home.html',{'categories': categories,'products':products,'product_count_in_cart':product_count_in_cart})
 
 
 
@@ -409,15 +414,15 @@ def customer_address_view(request):
 
 
 
-# here we are just directing to this view...actually we have to check whther payment is successful or not
-#then only this view should be accessed
+# burada sadece bu görünüme yöneliyoruz...aslında ödemenin başarılı olup olmadığını kontrol etmemiz gerekiyor
+# o zaman yalnızca bu görünüme erişilmelidir
 @login_required(login_url='customerlogin')
 def payment_success_view(request):
-    # Here we will place order | after successful payment
-    # we will fetch customer  mobile, address, Email
-    # we will fetch product id from cookies then respective details from db
-    # then we will create order objects and store in db
-    # after that we will delete cookies because after order placed...cart should be empty
+    # Burada sipariş vereceğiz | başarılı ödeme sonrasında
+    # müşterinin cep telefonunu, adresini, E-postasını alacağız
+    # ürün kimliğini çerezlerden alacağız, ardından ilgili ayrıntıları db'den alacağız
+    # daha sonra sipariş nesneleri oluşturacağız ve veritabanında saklayacağız
+    # bundan sonra çerezleri sileceğiz çünkü sipariş verildikten sonra...sepetin boş olması gerekir
     customer=models.Customer.objects.get(user_id=request.user.id)
     products=None
     email=None
@@ -428,9 +433,9 @@ def payment_success_view(request):
         if product_ids != "":
             product_id_in_cart=product_ids.split('|')
             products=models.Product.objects.all().filter(id__in = product_id_in_cart)
-            # Here we get products list that will be ordered by one customer at a time
+            # Burada tek seferde bir müşteri tarafından sipariş edilecek ürünlerin listesini alıyoruz
 
-    # these things can be change so accessing at the time of order...
+ #bu şeyler değişiklik gösterebilir, sipariş anında erişebilirsiniz...
     if 'email' in request.COOKIES:
         email=request.COOKIES['email']
     if 'mobile' in request.COOKIES:
@@ -438,13 +443,13 @@ def payment_success_view(request):
     if 'address' in request.COOKIES:
         address=request.COOKIES['address']
 
-    # here we are placing number of orders as much there is a products
-    # suppose if we have 5 items in cart and we place order....so 5 rows will be created in orders table
-    # there will be lot of redundant data in orders table...but its become more complicated if we normalize it
+    # burada ürün sayısı kadar sipariş veriyoruz
+    # diyelim ki sepetimizde 5 ürün var ve sipariş veriyoruz... yani siparişler tablosunda 5 satır oluşacak
+    # Sipariş tablosunda çok fazla gereksiz veri olacak... ancak bunu normalleştirirsek daha karmaşık hale gelir
     for product in products:
         models.Orders.objects.get_or_create(customer=customer,product=product,status='Pending',email=email,mobile=mobile,address=address)
 
-    # after order placed cookies should be deleted
+    # sipariş verildikten sonra çerezler silinmelidir
     response = render(request,'ecom/payment_success.html')
     response.delete_cookie('product_ids')
     response.delete_cookie('email')

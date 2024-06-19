@@ -22,7 +22,7 @@ body::before {
   z-index: -1; /* Ensure it is behind all other content */
 }
 .wrapper {
-  width: 400px;
+  width: 350px;
   height: 400px;
   background: white;
   margin: auto;
@@ -273,6 +273,52 @@ img {
 
 
 
+/* Slide container genel stil */
+.slider-container {
+  height: 35%; /* Bu değeri ihtiyaçlarınıza göre ayarlayabilirsiniz */
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  border: 2px solid rgb(124, 124, 124);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .23), inset 1px 1px 0 0 hsla(0, 0%, 100%, .2);
+}
+
+/* Slide container içindeki slide stil */
+.slide {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  z-index: 10;
+  background-size: cover;
+  background-position: center;
+  transition: left 0s .75s;
+}
+
+/* Slide radio buttonları kontrol edildiğinde uygulanacak stil */
+[id^="slide"]:checked + .slide {
+  left: 0;
+  z-index: 100;
+  transition: left .65s ease-out;
+}
+
+/* Slide resimlerinin stilleri */
+.slide-1 {
+  background-image: url("{% static 'images/resized_image.png' %}");
+}
+.slide-2 {
+  background-image: url("{% static 'images/banner2.jpg' %}");
+}
+.slide-3 {
+  background-image: url("{% static 'images/banner3.png' %}");
+}
+.slide-4 {
+  background-image: url("{% static 'images/banner4.png' %}");
+}
+
+/* Menu stil */
 .menu {
   position: absolute;
   left: 0;
@@ -287,59 +333,41 @@ img {
   width: 16px;
   height: 16px;
   background: #fff;
-  border-radius: 50px;
+  border-radius: 50%;
   margin: 0 .2em 1em;
-  &:hover {
-    background: red;
+}
+
+.menu label:hover {
+  background: red;
+}
+
+/* Responsive layout */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
   }
 }
 
-.slide {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 100%;
-  z-index: 10;
-  padding: 8em 1em 0;
-  background-size: cover;
-  background-position: 50% 50%;
-  transition: left 0s .75s;
+img {
+  max-width: 100%;
 }
 
-[id^="slide"]:checked + .slide {
-  left: 0;
-  z-index: 100;
-  transition: left .65s ease-out;
-}
-
-.slide-1 {
-  background-image: url("{% static 'images/resized_image.png' %}");
-}
-.slide-2 {
-  background-image: url("{% static 'images/banner2.jpg' %}");
-}
-.slide-3 {
-  background-image: url("{% static 'images/banner3.png' %}");
-}
-.slide-4 {
-  background-image: url("{% static 'images/banner4.png' %}");
-}
-
-.slider-container{
-  height: 35%;
-  width: 100%;
-  position: relative;
-  overflow: hidden; 
-  text-align: center;
-  border: 2px solid rgb(124, 124, 124);
-  box-shadow: 3px 3px 3px 3px;
-}
-
-.slidecontainer{
+.slidecontainer {
   margin-top: 1rem;
   padding: 34px;
+}
 
+/* Ekran boyutuna göre slider'ın yüksekliğini ayarlama */
+@media (max-width: 1200px) {
+  .slider-container {
+    height: 45%; /* Daha küçük ekranlar için yükseklik artırılabilir */
+  }
+}
+
+@media (max-width: 768px) {
+  .slider-container {
+    height: 50%; /* Daha küçük ekranlar için yükseklik artırılabilir */
+  }
 }
   </style>
 
@@ -369,6 +397,15 @@ img {
   </div>
 </div>
 </div>
+
+<!-- <div class="category-bar">
+  {% for category in categories %}
+      <a href="{% url 'product_list_by_category' category.id %}">{{ category.name }}</a>
+  {% endfor %}
+</div>
+<div class="container">
+
+</div> -->
 
 
   {%if products%}

@@ -8,9 +8,12 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
 <style>
+
+    
 body {
     background-color: #f7f7f7;
 }
+
 
 #navbar {
     background-color: #002544;
@@ -186,6 +189,15 @@ body {
         margin: 0px
     }
 }
+
+
+.navbar-nav li a{
+    color:black;
+    font-weight: 900;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+
 </style>
 </head>
 <body>
@@ -248,6 +260,54 @@ document.body.style.backgroundColor = "rgba(0,0,0,0)";
 
 });
 </script>
+
+<body>
+
+    <div class="demo">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-mobile bootsnav on" style="display:flex;justify-content:center;color:black">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                        </div>
+                        <div class="collapse navbar-collapse" id="navbar-menu">
+                            <ul class="nav navbar-nav" data-in="fadeInDown" data-out="fadeOutUp">
+                                <li class="active"><a href="#" data-hover="Home">Home <span data-hover="Home"></span></a></li>
+                                <li><a href="#" data-hover="About">About <span data-hover="About"></span></a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="Categories">Categories <span data-hover="Categories"></span></a>
+                                    <ul class="dropdown-menu animated">
+                                        {% for category in categories %}
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ category.name }}</a>
+                                                <ul class="dropdown-menu animated">
+                                                    <!-- {% for product in category.product_set.all %}
+                                                        <li><a href="#">{{ product.name }}</a></li>
+                                                    {% endfor %} -->
+                                                </ul>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="Pages">Contact Us <span data-hover="Pages"></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- Bootstrap and jQuery scripts -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 </body>
 </html>

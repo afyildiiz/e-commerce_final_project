@@ -6,17 +6,116 @@
 
 </head>
 <style media="screen">
+    .cssbuttons-io-button {
+        width: 100%;
+        background: #002544;
+        color: white;
+        font-family: inherit;
+        padding: 0.35em;
+        padding-left: 1.2em;
+        font-size: 17px;
+        font-weight: 500;
+        border-radius: 0.9em;
+        border: none;
+        letter-spacing: 0.05em;
+        display: flex;
+        align-items: center;
+        box-shadow: inset 0 0 1.6em -0.6em #714da6;
+        overflow: hidden;
+        position: relative;
+        height: 2.8em;
+        padding-right: 3.3em;
+        cursor: pointer;
+      }
+      
+      .cssbuttons-io-button .icon {
+        background: white;
+        margin-left: 1em;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 2.2em;
+        width: 2.2em;
+        border-radius: 0.7em;
+        box-shadow: 0.1em 0.1em 0.6em 0.2em #7b52b9;
+        right: 0.3em;
+        transition: all 0.3s;
+      }
+      
+      .cssbuttons-io-button:hover .icon {
+        width: calc(100% - 0.6em);
+      }
+      
+      .cssbuttons-io-button .icon svg {
+        width: 1.1em;
+        transition: transform 0.3s;
+        color: #7b52b9;
+      }
+      
+      .cssbuttons-io-button:hover .icon svg {
+        transform: translateX(0.1em);
+      }
+      
+      .cssbuttons-io-button:active .icon {
+        transform: scale(0.95);
+      }
+
+.panel-default{
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .23), inset 1px 1px 0 0 hsla(0, 0%, 100%, .2);
+
+}
+      
+.cyberpunk-checkbox {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #30cfd0;
+    border-radius: 5px;
+    background-color: transparent;
+    display: inline-block;
+    position: relative;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  
+  .cyberpunk-checkbox:before {
+    content: "";
+    background-color: #30cfd0;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .cyberpunk-checkbox:checked:before {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  
+  .cyberpunk-checkbox-label {
+    font-size: 18px;
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+  }
 
 .panel-title {display: inline;font-weight: bold;}
 .checkbox.pull-right { margin: 0; }
 .pl-ziro { padding-left: 0px; }
 </style>
-<br><br>
-<center><i>This is a FAKE PAYMENT. Just for demo purpose</i></center>
+<br>
+
 <br><br>
 <div class="container" style="text-align:center; padding-left:300px;">
     <div class="row">
-        <div class="col-xs-12 col-md-4" style="height:500px; width:600px;">
+        <div class="col-xs-12 col-md-4" style="width:600px;">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
@@ -72,12 +171,31 @@
                     </form>
                 </div>
             </div>
-            <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#"><span class="badge pull-right">{{total}}</span> Final Payment</a>
+            <!-- <ul class="nav btn-success nav-pills nav-stacked">
+                <li class=""><a href="#"><span class="badge pull-right">{{total}}</span> Final Payment</a>
                 </li>
-            </ul>
-            <br/>
-            <a href="/payment-success" class="btn btn-success btn-lg btn-block" role="button">Pay</a>
+            </ul> -->
+            <!-- <br/> -->
+            <a href="/payment-success" class="btn btn-lg btn-block" role="button">
+            <button class="cssbuttons-io-button">
+                {{total}} $
+                <div class="icon">
+                  <svg
+                    height="24"
+                    width="24"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                    <path
+                      d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                </div>
+              </button>
+            </a>
+              
         </div>
     </div>
 </div>
