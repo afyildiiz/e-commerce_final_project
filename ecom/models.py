@@ -22,7 +22,13 @@ email_regex = RegexValidator(regex=r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9
 string_regex =  RegexValidator(regex=r'^[a-zA-Z]+(?:\s[a-zA-Z]+)*$', message="Some special characters like (~!#^`'$|{}<>*) are not allowed.")
 mobile_validate = RegexValidator(regex=r'^(\+\d{1,3})?\d{10}$',message='Enter a valid 10-digit mobile number +91 9999999999')
 
-
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+    
+    def __str__(self):
+        return self.name
+    
 class Supplier(models.Model):
     email = models.EmailField(unique=True,db_index=True, validators=[email_regex])
     first_name = models.CharField(max_length=50, blank=True, null=True, validators=[string_regex])
@@ -32,12 +38,15 @@ class Supplier(models.Model):
 
 class Product(models.Model):
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE,null=True)
+    category = models.ForeignKey(Category,on_delete=models.SET_NULL, null=True, blank=True)
     name=models.CharField(max_length=40)
     product_image= models.ImageField(upload_to='product_image/',null=True,blank=True)
     price = models.PositiveIntegerField()
     description=models.CharField(max_length=40)
     def __str__(self):
         return self.name
+    
+
 
 
 class Orders(models.Model):

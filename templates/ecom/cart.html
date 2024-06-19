@@ -8,64 +8,141 @@
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
   <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <style media="screen">
-  .button {
-  display: inline-block;
-  border-radius: 4px;
-  background-color: #f4511e;
+
+
+
+
+
+button {
+  font-family: monospace;
+  background-color: #a8c7fc;
+  color: #3b82f6;
   border: none;
-  color: #FFFFFF;
-  text-align: center;
-  font-size: 28px;
-  padding: 20px;
-  width: 200px;
-  transition: all 0.5s;
+  border-radius: 8px;
+
+  transition: .3s;
+}
+
+button:hover {
+  background-color: #3b82f6;
+  box-shadow: 0 0 0 5px #3b83f65f;
+  color: #fff;
+}
+
+.abc{
+  padding: 50px;
+  border:0px solid #8a8a8a;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  border-radius: 15px;
+}
+
+
+
+.button {
+  width: 75px;
+  height: 50px;
   cursor: pointer;
-  margin: 5px;
-}
-
-.button span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
-}
-
-.button span:after {
-  content: '\00bb';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
-}
-
-.button:hover span {
-  padding-right: 25px;
-}
-
-.button:hover span:after {
-  opacity: 1;
-  right: 0;
-}
-
-.button2 {
-  background-color: white;
-  color: black;
-  border: 2px solid #008CBA;
-}
-
-.button2:hover {
-  background-color: #008CBA;
+  display: flex;
+  align-items: center;
+  background: red;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: #e62222;
+ }
+ 
+ .button, .button span {
+  transition: 200ms;
+ }
+ 
+ .button .text {
+  transform: translateX(35px);
   color: white;
+  font-weight: bold;
+ }
+ 
+ .button .icon {
+  position: absolute;
+
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ }
+ 
+ .button svg {
+  width: 15px;
+  fill: #eee;
+ }
+ 
+ .button:hover {
+  background: #ff3636;
+ }
+ 
+ .button:hover .text {
+  color: transparent;
+ }
+ 
+ .button:hover .icon {
+  width: 75px;
+  border-left: none;
+  transform: translateX(0);
+ }
+ 
+ .button:focus {
+  outline: none;
+ }
+ 
+ .button:active .icon svg {
+  transform: scale(0.8);
+ }
+
+
+ .main-box {
+  width: 51px;
+  height: 43px;
+  background-color: #3e2222;
+  top: 50%;
+  border-radius: 1px;
+  padding: .5rem;
+  display: flex;
+  flex-direction: row;
 }
 
+/* ICONS */
+
+.icon-box {
+  background-color: #ff6c6c;
+  display: inline-block;
+  padding: .5rem .8rem;
+  transition: all .2s ease-out;
+  display: flex;
+  flex-direction: column;
+  width: 40px;
+  height: auto;
+  position: relative;
+}
+
+.icon-box:hover {
+  background-color: tomato;
+  cursor: pointer; 
+}
+
+
+
+.icon {
+  font-size: 2.5rem;
+/*   margin-bottom: 1.8rem; */
+  position: absolute;
+  transition: all .2s ease-out;
+}
 </style>
 
 </head>
 
 <br><br><br><br>
 
-<div class="container">
+<!-- <div class="container">
   <div class="panel panel-success">
     <div class="panel-heading">
       <h6 style="text-align:center;" class="panel-title">My Cart</h6>
@@ -108,6 +185,108 @@
 </div>
 
 
-<br><br><br><br><br>
+<br><br><br><br><br> -->
+
+
+
+<div class="px-4 px-lg-0">
+
+  <div class="pb-5">
+    <div class="container abc">
+      <div class="row">
+        <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
+
+          <!-- Shopping cart table -->
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" class="border-0 bg-light">
+                    <div class="p-2 px-3 text-uppercase">Image</div>
+                  </th>
+                  <!-- <th scope="col" class="border-0 bg-light">
+                    <div class="py-2 text-uppercase">Name</div>
+                  </th> -->
+                  <th scope="col" class="border-0 bg-light">
+                    <div class="py-2 text-uppercase">Price</div>
+                  </th>
+                  <th scope="col" class="border-0 bg-light">
+                    <div class="py-2 text-uppercase">Description</div>
+                  </th>
+                  <th scope="col" class="border-0 bg-light">
+                    <div class="py-2 text-uppercase"></div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for p in products %}
+                {% if p %}
+                <tr>
+                  <th scope="row" class="border-0">
+                    <div class="p-2">
+                      <img src="{% static p.product_image.url %}" alt="Profile Pic" height="50px" width="50px" />
+                      <div class="ml-3 d-inline-block align-middle">
+                        <h5 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">{{p.name}}</a></h5><span class="text-muted font-weight-normal font-italic d-block"></span>
+                      </div>
+                    </div>
+                  </th>
+                  <td class="border-0 align-middle"><strong>{{p.price}} $</strong></td>
+                  <td class="border-0 align-middle"><strong>{{p.description}}</strong></td>
+                  <td>
+                    <a href="{% url 'remove-from-cart' p.id  %}">
+                    <div class="main-box">
+    
+                      <div class="icon-box">
+                        <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M17 5V4C17 2.89543 16.1046 2 15 2H9C7.89543 2 7 2.89543 7 4V5H4C3.44772 5 3 5.44772 3 6C3 6.55228 3.44772 7 4 7H5V18C5 19.6569 6.34315 21 8 21H16C17.6569 21 19 19.6569 19 18V7H20C20.5523 7 21 6.55228 21 6C21 5.44772 20.5523 5 20 5H17ZM15 4H9V5H15V4ZM17 7H7V18C7 18.5523 7.44772 19 8 19H16C16.5523 19 17 18.5523 17 18V7Z"
+                          fill="currentColor"
+                        />
+                        <path d="M9 9H11V17H9V9Z" fill="currentColor" />
+                        <path d="M13 9H15V17H13V9Z" fill="currentColor" />
+                      </svg>
+                  
+                      </div>
+                  
+                      
+                    </div>
+                  </a>
+                  </td>
+
+                </tr>
+                {%else%}
+                <br><br><br>
+                <h1>no products</h1>
+                {% endif %}
+                {% endfor %}
+              </table>
+            </div>
+          </div>
+          <br><br><br>
+          <div style="text-align: center;">
+              <div style="float: right;font-weight:900">Total ${{total}}</div>
+            <a href="/customer-address"><button class="btn btn-lg" ><span>Purchase </span></button></a>
+          </div>
+              </tbody>
+            </table>
+          </div>
+          <!-- End -->
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
 
 {% endblock content %}
+
+

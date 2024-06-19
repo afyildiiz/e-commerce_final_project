@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,reverse
+from django.shortcuts import get_object_or_404, render,redirect,reverse
 from . import forms,models
 from django.http import HttpResponseRedirect,HttpResponse
 from django.core.mail import send_mail
@@ -7,8 +7,24 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from django.contrib import messages
 from django.conf import settings
 
+def product_list_by_category(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    products = Product.objects.filter(category=category)
+    return render(request, 'product_list.html', {'category': category, 'products': products})
+
+def add_category_view(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('admin-categories')  # Redirect to the category list or some other page
+    else:
+        form = CategoryForm()
+    return render(request, 'ecom/admin_add_category.html', {'form': form})
+
 def home_view(request):
     products=models.Product.objects.all()
+    categories = Category.objects.all()
     if 'product_ids' in request.COOKIES:
         product_ids = request.COOKIES['product_ids']
         counter=product_ids.split('|')
@@ -17,17 +33,17 @@ def home_view(request):
         product_count_in_cart=0
     if request.user.is_authenticated:
         return HttpResponseRedirect('afterlogin')
-    return render(request,'ecom/index.html',{'products':products,'product_count_in_cart':product_count_in_cart})
+    return render(request,'ecom/index.html',{'products':products,'product_count_in_cart':product_count_in_cart,'categories': categories})
     
 
 
-#for showing login button for admin(by sumit)
+#for showing login button for admin(by DOU)
 def adminclick_view(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect('afterlogin')
     return HttpResponseRedirect('adminlogin')
 
-
+# KULLANICI KAYIT
 def customer_signup_view(request):
     userForm=forms.CustomerUserForm()
     customerForm=forms.CustomerForm()
@@ -47,7 +63,7 @@ def customer_signup_view(request):
         return HttpResponseRedirect('customerlogin')
     return render(request,'ecom/customersignup.html',context=mydict)
 
-#-----------for checking user iscustomer
+#----------- MUSTERİ OLUP OLMADIGINI KONTROL ETME FILTRESI
 def is_customer(user):
     return user.groups.filter(name='CUSTOMER').exists()
 
@@ -326,23 +342,26 @@ def send_feedback_view(request):
 
 
 #---------------------------------------------------------------------------------
-#------------------------ CUSTOMER RELATED VIEWS START ------------------------------
+#------------------------ Müşteri İle İlgili Bölümler ------------------------------
 #---------------------------------------------------------------------------------
+# Bu fonksiyon, müşterinin giriş yapıp yapmadığını ve müşteri olup olmadığını kontrol eder.
+# Ardından, tüm ürünleri veritabanından çeker ve sepet içindeki ürünlerin sayısını çerezlerden okur.
+# Son olarak, bu bilgileri kullanarak customer_home.html şablonunu render eder.
 @login_required(login_url='customerlogin')
 @user_passes_test(is_customer)
 def customer_home_view(request):
-    products=models.Product.objects.all()
-    if 'product_ids' in request.COOKIES:
-        product_ids = request.COOKIES['product_ids']
-        counter=product_ids.split('|')
-        product_count_in_cart=len(set(counter))
-    else:
-        product_count_in_cart=0
+    products=models.Product.objects.all() #tüm ürünleri veritabanından aldık
+    if 'product_ids' in request.COOKIES: # eğer çerezlerde product_ids varsa
+        product_ids = request.COOKIES['product_ids'] # yeni bir değişkene idler atanır.
+        counter=product_ids.split('|') # ürün kimlikleri | karakteriyle ayrılarak bir listeye dönüştürülür
+        product_count_in_cart=len(set(counter)) # tekrarları listeden atarak ürün sayısı id üzerinden hesaplanır.
+    else: # ürün yoksa da 
+        product_count_in_cart=0 # sepetteki ürünleri sıfırla
     return render(request,'ecom/customer_home.html',{'products':products,'product_count_in_cart':product_count_in_cart})
 
 
 
-# shipment address before placing order
+# sipariş öncesi tewslimat adresi
 @login_required(login_url='customerlogin')
 def customer_address_view(request):
     # this is for checking whether product is present in cart or not
@@ -510,7 +529,7 @@ def download_invoice_view(request,orderID,productID):
 
 
 
-
+# PROFİL BİLGİLERİNİ GETİRME
 @login_required(login_url='customerlogin')
 @user_passes_test(is_customer)
 def my_profile_view(request):
@@ -564,10 +583,10 @@ def contactus_view(request):
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import CustomerForm
+from .forms import CategoryForm, CustomerForm
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Supplier
+from .models import Category, Supplier
 
 
 

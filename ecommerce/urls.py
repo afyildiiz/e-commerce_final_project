@@ -1,7 +1,7 @@
 """
 
-Developed By : sumit kumar
-facebook : fb.com/sumit.luv
+Developed By : DOU kumar
+facebook : fb.com/DOU.luv
 Youtube :youtube.com/lazycoders
 
 
@@ -19,6 +19,9 @@ app_name = 'ecom'
 
 
 urlpatterns = [
+    path('category/<int:category_id>/', views.product_list_by_category, name='product_list_by_category'),
+
+    
     path('admin/', admin.site.urls),
     path('',views.home_view,name=''),
     path('afterlogin', views.afterlogin_view,name='afterlogin'),

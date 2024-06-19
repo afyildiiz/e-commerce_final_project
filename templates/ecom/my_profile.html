@@ -35,7 +35,8 @@ body {
   top: 67.5px;
   margin-left: -350px;
   background: #E9E2D0;
-  box-shadow: -20px 0 35px -25px black, 20px 0 35px -25px black;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
   z-index: 5;
 }
 
@@ -71,7 +72,8 @@ body {
 <br><br><br>
 <div id="card">
   <img src="{% static customer.profile_pic.url %}" alt="profile pic" />
-  <h2>{{request.user}}</h2>
+  <h2><b>{{request.user}}</b></h2>
+  <br>
   <p><b> Address:</b> {{customer.address}}</p>
   <p><b> Contact:</b> {{customer.mobile}}</p>
   <a style="position:absolute; right: 5%; bottom: 10%;" href="/edit-profile" class="btn btn-primary btn-lg btn-edit"><span>Edit Profile</span></a>

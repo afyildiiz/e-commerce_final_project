@@ -51,7 +51,7 @@ body {
   background-color: #fff;
   border-radius: 15px;
   border:1px solid rgb(207, 207, 207);
-  box-shadow: 1px 1px 1px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   transition: all 0.5s ease;
 }
 
@@ -398,6 +398,22 @@ img {
   background-image: url("{% static 'images/ecom-banner3.jpg' %}");
 }
 
+.category-bar {
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #e7e7e7;
+  padding: 10px 0;
+  text-align: center;
+}
+.category-bar a {
+  color: #333;
+  padding: 10px 15px;
+  display: inline-block;
+  text-decoration: none;
+}
+.category-bar a:hover {
+  background-color: #e7e7e7;
+  color: #000;
+}
   </style>
 
 <div class="row">
@@ -422,6 +438,15 @@ img {
         <div class="slide slide-4"></div>
     </div>
   </div>
+</div>
+
+<div class="category-bar">
+  {% for category in categories %}
+      <a href="{% url 'product_list_by_category' category.id %}">{{ category.name }}</a>
+  {% endfor %}
+</div>
+<div class="container">
+  <!-- Content goes here -->
 </div>
 
 {%if products%}
