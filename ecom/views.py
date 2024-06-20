@@ -29,12 +29,20 @@ def home_view(request):
         return HttpResponseRedirect('afterlogin')
     return render(request, 'ecom/index.html', {'products': products, 'product_count_in_cart': product_count_in_cart, 'categories': categories})
 
+# def product_list_by_category(request, category_id):
+#     category = get_object_or_404(Category, id=category_id)
+#     products = Product.objects.filter(category=category)
+#     return render(request, 'ecom/product_list.html', {'category': category, 'products': products})
+ 
 def product_list_by_category(request, category_id):
     category = get_object_or_404(Category, id=category_id)
     products = Product.objects.filter(category=category)
-    return render(request, 'ecom/product_list_by_category.html', {'category': category, 'products': products})
- 
-
+    context = {
+        'category': category,
+        'products': products,
+        'MEDIA_URL': settings.MEDIA_URL,
+    }
+    return render(request, 'ecom/product_list.html', context)
 
 #for showing login button for admin(by DOU)
 def adminclick_view(request):

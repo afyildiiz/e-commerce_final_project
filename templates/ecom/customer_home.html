@@ -275,12 +275,12 @@ img {
 
 /* Slide container genel stil */
 .slider-container {
-  height: 35%; /* Bu değeri ihtiyaçlarınıza göre ayarlayabilirsiniz */
+  height: 65%; /* Bu değeri ihtiyaçlarınıza göre ayarlayabilirsiniz */
   width: 100%;
   position: relative;
   overflow: hidden;
   text-align: center;
-  border: 2px solid rgb(124, 124, 124);
+
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .23), inset 1px 1px 0 0 hsla(0, 0%, 100%, .2);
 }
 
@@ -306,16 +306,16 @@ img {
 
 /* Slide resimlerinin stilleri */
 .slide-1 {
-  background-image: url("{% static 'images/resized_image.png' %}");
+  background-image: url("{% static 'images/1.jpg' %}");
 }
 .slide-2 {
-  background-image: url("{% static 'images/banner2.jpg' %}");
+  background-image: url("{% static 'images/2.jpg' %}");
 }
 .slide-3 {
-  background-image: url("{% static 'images/banner3.png' %}");
+  background-image: url("{% static 'images/3.jpg' %}");
 }
 .slide-4 {
-  background-image: url("{% static 'images/banner4.png' %}");
+  background-image: url("{% static 'images/5.jpg' %}");
 }
 
 /* Menu stil */
@@ -353,8 +353,8 @@ img {
 }
 
 .slidecontainer {
-  margin-top: 1rem;
-  padding: 34px;
+  margin-top: -5rem;
+  padding: 100px;
 }
 
 /* Ekran boyutuna göre slider'ın yüksekliğini ayarlama */
@@ -409,7 +409,7 @@ img {
 
 
   {%if products%}
-  <h3 style="text-align:center; color:#3E454C;">{{word}}</h3>
+  <!-- <h3 style="text-align:center; color:#3E454C;">{{word}}</h3> -->
   <br>
   
   <!-- products data start -->

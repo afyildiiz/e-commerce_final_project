@@ -6,6 +6,9 @@ Youtube :youtube.com/lazycoders
 
 
 """
+from django.conf import settings
+from django.conf.urls.static import static
+
 from django.contrib import admin
 from django.urls import path
 from ecom import views
@@ -45,7 +48,6 @@ urlpatterns = [
     path('delete-product/<int:pk>', views.delete_product_view,name='delete-product'),
     path('update-product/<int:pk>', views.update_product_view,name='update-product'),
     
-path('category/<int:category_id>/', views.product_list_by_category, name='product_list_by_category'),
 
     path('admin-view-booking', views.admin_view_booking_view,name='admin-view-booking'),
     path('delete-order/<int:pk>', views.delete_order_view,name='delete-order'),
