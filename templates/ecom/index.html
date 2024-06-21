@@ -3,6 +3,240 @@
 {% block content %}
 
 <style media="screen">
+
+
+  @keyframes tonext {
+    75% {
+      left: 0;
+    }
+  
+    95% {
+      left: 100%;
+    }
+  
+    98% {
+      left: 100%;
+    }
+  
+    99% {
+      left: 0;
+    }
+  }
+  
+  @keyframes tostart {
+    75% {
+      left: 0;
+    }
+  
+    95% {
+      left: -300%;
+    }
+  
+    98% {
+      left: -300%;
+    }
+  
+    99% {
+      left: 0;
+    }
+  }
+  
+  @keyframes snap {
+    96% {
+      scroll-snap-align: center;
+    }
+  
+    97% {
+      scroll-snap-align: none;
+    }
+  
+    99% {
+      scroll-snap-align: none;
+    }
+  
+    100% {
+      scroll-snap-align: center;
+    }
+  }
+  
+  *::-webkit-scrollbar {
+    width: 0;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background: transparent;
+    border: none;
+  }
+  
+  * {
+    -ms-overflow-style: none;
+  }
+  
+  ol, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .carousel {
+    height: 50%;
+    position: relative;
+    filter: drop-shadow(0 0 10px #0003);
+    perspective: 100px;
+  }
+  
+  .carousel__viewport {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    overflow-x: scroll;
+    counter-reset: item;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .carousel__slide {
+    position: relative;
+    flex: 0 0 100%;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    counter-increment: item;
+  }
+  
+  .carousel__slide:before {
+    content: counter(item);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -40%, 70px);
+    color: #fff;
+    font-size: 2em;
+  }
+  
+  .carousel__snapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    scroll-snap-align: center;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .carousel__snapper img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
+  
+  @media (hover: hover) {
+    .carousel__snapper {
+      animation-name: tonext, snap;
+      animation-timing-function: ease;
+      animation-duration: 4s;
+      animation-iteration-count: infinite;
+    }
+  
+    .carousel__slide:last-child .carousel__snapper {
+      animation-name: tostart, snap;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .carousel__snapper {
+      animation-name: none;
+    }
+  }
+  
+  .carousel:hover .carousel__snapper,
+  .carousel:focus-within .carousel__snapper {
+    animation-name: none;
+  }
+  
+  .carousel__navigation {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+  }
+  
+  .carousel__navigation-list,
+  .carousel__navigation-item {
+    display: inline-block;
+  }
+  
+  .carousel__navigation-button {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #333;
+    background-clip: content-box;
+    border: 0.25rem solid transparent;
+    border-radius: 50%;
+    font-size: 0;
+    transition: transform 0.1s;
+  }
+  
+  .carousel::before,
+  .carousel::after,
+  .carousel__prev,
+  .carousel__next {
+    position: absolute;
+    top: 0;
+    margin-top: 12.5%;
+    width: 4rem;
+    height: 4rem;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    font-size: 0;
+    outline: 0;
+  }
+  
+  .carousel::before,
+  .carousel__prev {
+    left: 20%;
+  }
+  
+  .carousel::after,
+  .carousel__next {
+    right: 20%;
+  }
+  
+  .carousel::before,
+  .carousel::after {
+    content: '';
+    z-index: 1;
+    background-color: #333;
+    background-size: 1.5rem 1.5rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: #fff;
+    font-size: 2.5rem;
+    line-height: 4rem;
+    text-align: center;
+    pointer-events: none;
+  }
+  
+  .carousel::before {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='0,50 80,100 80,0' fill='%23fff'/%3E%3C/svg%3E");
+  }
+  
+  .carousel::after {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='100,50 20,100 20,0' fill='%23fff'/%3E%3C/svg%3E");
+  }
   body {
     position: relative;
     background: none; /* Remove the default background */
@@ -15,7 +249,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: url("{% static 'images/background.jpg' %}") center center;
+    /* background: url("{% static 'images/background.jpg' %}") center center; */
     opacity: 0.3; /* Adjust the opacity as needed */
     z-index: -1; /* Ensure it is behind all other content */
   }
@@ -270,130 +504,58 @@
   }
   
   
-  
-  .slider-container {
-    height: 65%; /* Bu değeri ihtiyaçlarınıza göre ayarlayabilirsiniz */
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-  
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .23), inset 1px 1px 0 0 hsla(0, 0%, 100%, .2);
-  }
-  
-  /* Slide container içindeki slide stil */
-  .slide {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 100%;
-    z-index: 10;
-    background-size: cover;
-    background-position: center;
-    transition: left 0s .75s;
-  }
-  
-  /* Slide radio buttonları kontrol edildiğinde uygulanacak stil */
-  [id^="slide"]:checked + .slide {
-    left: 0;
-    z-index: 100;
-    transition: left .65s ease-out;
-  }
-  
-  /* Slide resimlerinin stilleri */
-  .slide-1 {
-    background-image: url("{% static 'images/1.jpg' %}");
-  }
-  .slide-2 {
-    background-image: url("{% static 'images/2.jpg' %}");
-  }
-  .slide-3 {
-    background-image: url("{% static 'images/3.jpg' %}");
-  }
-  .slide-4 {
-    background-image: url("{% static 'images/5.jpg' %}");
-  }
-  
-  /* Menu stil */
-  .menu {
-    position: absolute;
-    left: 0;
-    z-index: 900;
-    width: 100%;
-    bottom: 0;
-  }
-  
-  .menu label {
-    cursor: pointer;
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    background: #fff;
-    border-radius: 50%;
-    margin: 0 .2em 1em;
-  }
-  
-  .menu label:hover {
-    background: red;
-  }
-  
-  /* Responsive layout */
-  @media screen and (max-width: 600px) {
-    .column {
-      width: 100%;
-    }
-  }
-  
-  img {
-    max-width: 100%;
-  }
-  
-  .slidecontainer {
-    margin-top: -5rem;
-    padding: 100px;
-  }
-  
-  /* Ekran boyutuna göre slider'ın yüksekliğini ayarlama */
-  @media (max-width: 1200px) {
-    .slider-container {
-      height: 45%; /* Daha küçük ekranlar için yükseklik artırılabilir */
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .slider-container {
-      height: 50%; /* Daha küçük ekranlar için yükseklik artırılabilir */
-    }
-  }
     </style>
   
-  <div class="slidecontainer">
-  
-  <div class="row">
-    <div class="col-md-12">
-      <div class="slider-container">
-        <div class="menu">
-          <label for="slide-dot-1"></label>
-          <label for="slide-dot-2"></label>
-          <label for="slide-dot-3"></label>
-          <label for="slide-dot-4"></label>
-        </div>
-        
-        <input id="slide-dot-1" type="radio" name="slides" checked>
-          <div class="slide slide-1"></div>
-        
-        <input id="slide-dot-2" type="radio" name="slides">
-          <div class="slide slide-2"></div>
-        
-        <input id="slide-dot-3" type="radio" name="slides">
-          <div class="slide slide-3"></div>
-        <input id="slide-dot-4" type="radio" name="slides">
-          <div class="slide slide-4"></div>
-      </div>
+    <div class="row" style="margin-top:5rem">
+      <section class="carousel" aria-label="Gallery">
+        <ol class="carousel__viewport">
+          <li id="carousel__slide1" tabindex="0" class="carousel__slide">
+            <div class="carousel__snapper">
+              <img src="{% static 'images/1.jpg' %}" alt="Slide 1">
+              <a href="#carousel__slide4" class="carousel__prev">Go to last slide</a>
+              <a href="#carousel__slide2" class="carousel__next">Go to next slide</a>
+            </div>
+          </li>
+          <li id="carousel__slide2" tabindex="0" class="carousel__slide">
+            <div class="carousel__snapper">
+              <img src="{% static 'images/2.jpg' %}" alt="Slide 2">
+              <a href="#carousel__slide1" class="carousel__prev">Go to previous slide</a>
+              <a href="#carousel__slide3" class="carousel__next">Go to next slide</a>
+            </div>
+          </li>
+          <li id="carousel__slide3" tabindex="0" class="carousel__slide">
+            <div class="carousel__snapper">
+              <img src="{% static 'images/3.jpg' %}" alt="Slide 3">
+              <a href="#carousel__slide2" class="carousel__prev">Go to previous slide</a>
+              <a href="#carousel__slide4" class="carousel__next">Go to next slide</a>
+            </div>
+          </li>
+          <li id="carousel__slide4" tabindex="0" class="carousel__slide">
+            <div class="carousel__snapper">
+              <img src="{% static 'images/5.jpg' %}" alt="Slide 4">
+              <a href="#carousel__slide3" class="carousel__prev">Go to previous slide</a>
+              <a href="#carousel__slide1" class="carousel__next">Go to first slide</a>
+            </div>
+          </li>
+        </ol>
+        <aside class="carousel__navigation">
+          <ol class="carousel__navigation-list">
+            <li class="carousel__navigation-item">
+              <a href="#carousel__slide1" class="carousel__navigation-button">Go to slide 1</a>
+            </li>
+            <li class="carousel__navigation-item">
+              <a href="#carousel__slide2" class="carousel__navigation-button">Go to slide 2</a>
+            </li>
+            <li class="carousel__navigation-item">
+              <a href="#carousel__slide3" class="carousel__navigation-button">Go to slide 3</a>
+            </li>
+            <li class="carousel__navigation-item">
+              <a href="#carousel__slide4" class="carousel__navigation-button">Go to slide 4</a>
+            </li>
+          </ol>
+        </aside>
+      </section>
     </div>
-  </div>
-  </div>
   
   <!-- <div class="category-bar">
     {% for category in categories %}
@@ -426,7 +588,7 @@
                 <div class="column">
                     <div class="wrapper">
                         <div class="container">
-                          <img class="img" src="{% static p.product_image.url %}" alt="product pic" height="300px" width="300px">
+                          <img class="img" src="{{  p.product_image.url }}" alt="product pic" height="300px" width="300px">
                               <div class="bottom">
                                 <div class="details">
                                     <h3>{{ p.name }}</h3>
@@ -451,10 +613,10 @@
                                     <tr>
                                         <td>{{ p.description }}</td>
                                     </tr>
-                                    <tr>
+                                    <!-- <tr>
                                         <th>Stock</th>
                                         <td>{{ p.stock_quantity }}</td>
-                                    </tr>
+                                    </tr> -->
                                     <tr>
                                         
                                     </tr>

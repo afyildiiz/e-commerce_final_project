@@ -22,14 +22,14 @@ app_name = 'ecom'
 
 
 urlpatterns = [
-    path('category/<int:category_id>/', views.product_list_by_category, name='product_list_by_category'),
-    path('ajax/filter-products/', views.ajax_filter_products, name='ajax_filter_products'),
+
 
     
     path('admin/', admin.site.urls),
     path('',views.home_view,name=''),
     path('afterlogin', views.afterlogin_view,name='afterlogin'),
-    path('logout', LogoutView.as_view(template_name='ecom/logout.html'),name='logout'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+
     path('aboutus', views.aboutus_view,name="about"),
     path('contactus', views.contactus_view,name='contactus'),
     path('search', views.search_view,name='search'),
@@ -64,7 +64,8 @@ urlpatterns = [
     path('edit-profile', views.edit_profile_view,name='edit-profile'),
     path('download-invoice/<int:orderID>/<int:productID>', views.download_invoice_view,name='download-invoice'),
 
-
+    path('category/<int:category_id>/', views.product_list_by_category, name='product_list_by_category'),
+    path('ajax/filter-products/', views.ajax_filter_products, name='ajax_filter_products'),
     path('add-to-cart/<int:pk>', views.add_to_cart_view,name='add-to-cart'),
     path('cart', views.cart_view,name='cart'),
     path('remove-from-cart/<int:pk>', views.remove_from_cart_view,name='remove-from-cart'),

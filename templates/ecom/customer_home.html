@@ -4,263 +4,538 @@
 
 
 
-  <style media="screen">
-body {
-  position: relative;
-  background: none; /* Remove the default background */
-}
+<style media="screen">
 
-body::before {
-  content: '';
-  position: fixed; /* Use fixed to cover the entire viewport */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url("{% static 'images/background.jpg' %}") center center;
-  opacity: 0.3; /* Adjust the opacity as needed */
-  z-index: -1; /* Ensure it is behind all other content */
-}
-.wrapper {
-  width: 350px;
-  height: 400px;
-  background: white;
-  margin: auto;
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px 10px 10px 10px;
-  box-shadow: 0;
-  transform: scale(0.95);
-  transition: box-shadow 0.5s, transform 0.5s;
-}
-.wrapper:hover {
-  transform: scale(1);
-  box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);
-}
-.wrapper .container {
-  width: 100%;
-  height: 100%;
-  padding: 24px;
-}
-.wrapper .container img {
-  height: 70%;
-  width: 100%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-.wrapper .container .bottom {
-  height: 30%;
-  width: 100%;
-  transition: transform 0.5s;
-}
-.wrapper .container .bottom.clicked {
-  transform: translateX(-50%);
-}
-.wrapper .container .bottom h1 {
-  margin: 0;
-  padding: 0;
-}
-.wrapper .container .bottom p {
-  margin: 0;
-  padding: 0;
-  font-size: 24px;
-  float: left;
-  font-family: fantasy;
-}
-.wrapper .container .bottom .left {
-  height: 100%;
-  width: 50%;
-  /* background: #f4f4f4; */
-  position: relative;
-  float: left;
-}
-.wrapper .container .bottom .left .details {
-  /* padding: 20px; */
-  float: left;
-  width: calc(70% - 40px);
-}
-.wrapper .container .bottom .left .buy {
-  float: right;
-  padding: 20px;
-  width: calc(25% - 5px);
-  height: 100%;
-  /* background: #f1f1f1; */
-  transition: background 0.5s;
-  border-left: solid thin rgba(0, 0, 0, 0.1);
-}
-.wrapper .container .bottom .buy a svg {
-  width: 48px;
-  height: 44px;
-  fill: #254053;
-  transition: transform 0.5s;
-  float: right;
-}
-.wrapper .container .bottom .buy a:hover svg {
-  transform: translateY(5px);
-  fill: #00394B;
-}
-.wrapper .container .bottom .left .buy:hover {
-  background: #A6CDDE;
-}
-.wrapper .container .bottom .left .buy:hover i {
-  transform: translateY(5px);
-  color: #00394B;
-}
-.wrapper .container .bottom .right {
-  width: 50%;
-  /* background: #A6CDDE; */
-  color: white;
-  float: right;
-  height: 200%;
-  overflow: hidden;
-}
-.wrapper .container .bottom .right .details {
-  padding: 20px;
-  float: right;
-  width: calc(70% - 40px);
-}
-.wrapper .container .bottom .right .done {
-  width: calc(30% - 2px);
-  float: left;
-  transition: transform 0.5s;
-  border-right: solid thin rgba(255, 255, 255, 0.3);
-  height: 50%;
-}
-.wrapper .container .bottom .right .done i {
-  font-size: 30px;
-  padding: 30px;
-  color: white;
-}
-.wrapper .container .bottom .right .remove {
-  width: calc(30% - 1px);
-  clear: both;
-  border-right: solid thin rgba(255, 255, 255, 0.3);
-  height: 50%;
-  background: #BC3B59;
-  transition: transform 0.5s, background 0.5s;
-}
-.wrapper .container .bottom .right .remove:hover {
-  background: #9B2847;
-}
-.wrapper .container .bottom .right .remove:hover i {
-  transform: translateY(5px);
-}
-.wrapper .container .bottom .right .remove i {
-  transition: transform 0.5s;
-  font-size: 30px;
-  padding: 30px;
-  color: white;
-}
-.wrapper .container .bottom .right:hover .remove, .wrapper .container .bottom .right:hover .done {
-  transform: translateY(-100%);
-}
-.wrapper .inside {
-  z-index: 9;
-  background: #000000;
-  width: 140px;
-  height: 140px;
-  position: absolute;
-  top: -70px;
-  right: -70px;
-  border-radius: 0px 0px 200px 200px;
-  transition: all 0.5s, border-radius 2s, top 1s;
-  overflow: hidden;
-}
-.wrapper .inside .icon {
-  position: absolute;
-  right: 85px;
-  top: 85px;
-  color: white;
-  opacity: 1;
-}
-.wrapper .inside:hover {
-  width: 100%;
-  right: 0;
-  top: 0;
-  border-radius: 0;
-  height: 82%;
-}
-.wrapper .inside:hover .icon {
-  opacity: 0;
-  right: 15px;
-  top: 15px;
-}
-.wrapper .inside:hover .contents {
-  opacity: 1;
-  transform: scale(1);
-  transform: translateY(0);
-}
-.wrapper .inside .contents {
-  padding: 5%;
-  opacity: 0;
-  transform: scale(0.5);
-  transform: translateY(-200%);
-  transition: opacity 0.2s, transform 0.8s;
-}
-.wrapper .inside .contents table {
-  text-align: left;
-  width: 100%;
-}
-.wrapper .inside .contents h1, .wrapper .inside .contents p, .wrapper .inside .contents table {
-  color: white;
-}
-.wrapper .inside .contents p {
-  font-size: 13px;
-}
-
-
-
-
-    body,
-html {
-  height: 100%;
-}
-
-
-.flex-centerY-centerX {
-  justify-content: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-body {
-  background-color:#f7f7f7;
-}
-
-
-
-
-
-/* Create three equal columns that floats next to each other */
-.column {
-  float: left;
-  width: 33.33%;
-  padding: 10px;
-  /* margin: 10px; */
-  height: 420px; /* Should be removed. Only for demonstration */
+  @keyframes tonext {
+    75% {
+      left: 0;
+    }
   
-}
+    95% {
+      left: 100%;
+    }
+  
+    98% {
+      left: 100%;
+    }
+  
+    99% {
+      left: 0;
+    }
+  }
+  
+  @keyframes tostart {
+    75% {
+      left: 0;
+    }
+  
+    95% {
+      left: -300%;
+    }
+  
+    98% {
+      left: -300%;
+    }
+  
+    99% {
+      left: 0;
+    }
+  }
+  
+  @keyframes snap {
+    96% {
+      scroll-snap-align: center;
+    }
+  
+    97% {
+      scroll-snap-align: none;
+    }
+  
+    99% {
+      scroll-snap-align: none;
+    }
+  
+    100% {
+      scroll-snap-align: center;
+    }
+  }
+  
+  *::-webkit-scrollbar {
+    width: 0;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background: transparent;
+    border: none;
+  }
+  
+  * {
+    -ms-overflow-style: none;
+  }
+  
+  ol, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .carousel {
+    height: 50%;
+    position: relative;
+    filter: drop-shadow(0 0 10px #0003);
+    perspective: 100px;
+  }
+  
+  .carousel__viewport {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    overflow-x: scroll;
+    counter-reset: item;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .carousel__slide {
+    position: relative;
+    flex: 0 0 100%;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    counter-increment: item;
+  }
+  
+  .carousel__slide:before {
+    content: counter(item);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -40%, 70px);
+    color: #fff;
+    font-size: 2em;
+  }
+  
+  .carousel__snapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    scroll-snap-align: center;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .carousel__snapper img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
+  
+  @media (hover: hover) {
+    .carousel__snapper {
+      animation-name: tonext, snap;
+      animation-timing-function: ease;
+      animation-duration: 4s;
+      animation-iteration-count: infinite;
+    }
+  
+    .carousel__slide:last-child .carousel__snapper {
+      animation-name: tostart, snap;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .carousel__snapper {
+      animation-name: none;
+    }
+  }
+  
+  .carousel:hover .carousel__snapper,
+  .carousel:focus-within .carousel__snapper {
+    animation-name: none;
+  }
+  
+  .carousel__navigation {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+  }
+  
+  .carousel__navigation-list,
+  .carousel__navigation-item {
+    display: inline-block;
+  }
+  
+  .carousel__navigation-button {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #333;
+    background-clip: content-box;
+    border: 0.25rem solid transparent;
+    border-radius: 50%;
+    font-size: 0;
+    transition: transform 0.1s;
+  }
+  
+  .carousel::before,
+  .carousel::after,
+  .carousel__prev,
+  .carousel__next {
+    position: absolute;
+    top: 0;
+    margin-top: 12.5%;
+    width: 4rem;
+    height: 4rem;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    font-size: 0;
+    outline: 0;
+  }
+  
+  .carousel::before,
+  .carousel__prev {
+    left: 20%;
+  }
+  
+  .carousel::after,
+  .carousel__next {
+    right: 20%;
+  }
+  
+  .carousel::before,
+  .carousel::after {
+    content: '';
+    z-index: 1;
+    background-color: #333;
+    background-size: 1.5rem 1.5rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: #fff;
+    font-size: 2.5rem;
+    line-height: 4rem;
+    text-align: center;
+    pointer-events: none;
+  }
+  
+  .carousel::before {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='0,50 80,100 80,0' fill='%23fff'/%3E%3C/svg%3E");
+  }
+  
+  .carousel::after {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='100,50 20,100 20,0' fill='%23fff'/%3E%3C/svg%3E");
+  }
 
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
+  body {
+    position: relative;
+    background: none;
+    /* Remove the default background */
+  }
 
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
-  .column {
+  body::before {
+    content: '';
+    position: fixed;
+    /* Use fixed to cover the entire viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background: url("{% static 'images/background.jpg' %}") center center; */
+    opacity: 0.3;
+    /* Adjust the opacity as needed */
+    z-index: -1;
+    /* Ensure it is behind all other content */
+  }
+
+  .wrapper {
+    width: 350px;
+    height: 400px;
+    background: white;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 0;
+    transform: scale(0.95);
+    transition: box-shadow 0.5s, transform 0.5s;
+  }
+
+  .wrapper:hover {
+    transform: scale(1);
+    box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .wrapper .container {
+    width: 100%;
+    height: 100%;
+    padding: 24px;
+  }
+
+  .wrapper .container img {
+    height: 70%;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .wrapper .container .bottom {
+    height: 30%;
+    width: 100%;
+    transition: transform 0.5s;
+  }
+
+  .wrapper .container .bottom.clicked {
+    transform: translateX(-50%);
+  }
+
+  .wrapper .container .bottom h1 {
+    margin: 0;
+    padding: 0;
+  }
+
+  .wrapper .container .bottom p {
+    margin: 0;
+    padding: 0;
+    font-size: 24px;
+    float: left;
+    font-family: fantasy;
+  }
+
+  .wrapper .container .bottom .left {
+    height: 100%;
+    width: 50%;
+    /* background: #f4f4f4; */
+    position: relative;
+    float: left;
+  }
+
+  .wrapper .container .bottom .left .details {
+    /* padding: 20px; */
+    float: left;
+    width: calc(70% - 40px);
+  }
+
+  .wrapper .container .bottom .left .buy {
+    float: right;
+    padding: 20px;
+    width: calc(25% - 5px);
+    height: 100%;
+    /* background: #f1f1f1; */
+    transition: background 0.5s;
+    border-left: solid thin rgba(0, 0, 0, 0.1);
+  }
+
+  .wrapper .container .bottom .buy a svg {
+    width: 48px;
+    height: 44px;
+    fill: #254053;
+    transition: transform 0.5s;
+    float: right;
+  }
+
+  .wrapper .container .bottom .buy a:hover svg {
+    transform: translateY(5px);
+    fill: #00394B;
+  }
+
+  .wrapper .container .bottom .left .buy:hover {
+    background: #A6CDDE;
+  }
+
+  .wrapper .container .bottom .left .buy:hover i {
+    transform: translateY(5px);
+    color: #00394B;
+  }
+
+  .wrapper .container .bottom .right {
+    width: 50%;
+    /* background: #A6CDDE; */
+    color: white;
+    float: right;
+    height: 200%;
+    overflow: hidden;
+  }
+
+  .wrapper .container .bottom .right .details {
+    padding: 20px;
+    float: right;
+    width: calc(70% - 40px);
+  }
+
+  .wrapper .container .bottom .right .done {
+    width: calc(30% - 2px);
+    float: left;
+    transition: transform 0.5s;
+    border-right: solid thin rgba(255, 255, 255, 0.3);
+    height: 50%;
+  }
+
+  .wrapper .container .bottom .right .done i {
+    font-size: 30px;
+    padding: 30px;
+    color: white;
+  }
+
+  .wrapper .container .bottom .right .remove {
+    width: calc(30% - 1px);
+    clear: both;
+    border-right: solid thin rgba(255, 255, 255, 0.3);
+    height: 50%;
+    background: #BC3B59;
+    transition: transform 0.5s, background 0.5s;
+  }
+
+  .wrapper .container .bottom .right .remove:hover {
+    background: #9B2847;
+  }
+
+  .wrapper .container .bottom .right .remove:hover i {
+    transform: translateY(5px);
+  }
+
+  .wrapper .container .bottom .right .remove i {
+    transition: transform 0.5s;
+    font-size: 30px;
+    padding: 30px;
+    color: white;
+  }
+
+  .wrapper .container .bottom .right:hover .remove,
+  .wrapper .container .bottom .right:hover .done {
+    transform: translateY(-100%);
+  }
+
+  .wrapper .inside {
+    z-index: 9;
+    background: #000000;
+    width: 140px;
+    height: 140px;
+    position: absolute;
+    top: -70px;
+    right: -70px;
+    border-radius: 0px 0px 200px 200px;
+    transition: all 0.5s, border-radius 2s, top 1s;
+    overflow: hidden;
+  }
+
+  .wrapper .inside .icon {
+    position: absolute;
+    right: 85px;
+    top: 85px;
+    color: white;
+    opacity: 1;
+  }
+
+  .wrapper .inside:hover {
+    width: 100%;
+    right: 0;
+    top: 0;
+    border-radius: 0;
+    height: 82%;
+  }
+
+  .wrapper .inside:hover .icon {
+    opacity: 0;
+    right: 15px;
+    top: 15px;
+  }
+
+  .wrapper .inside:hover .contents {
+    opacity: 1;
+    transform: scale(1);
+    transform: translateY(0);
+  }
+
+  .wrapper .inside .contents {
+    padding: 5%;
+    opacity: 0;
+    transform: scale(0.5);
+    transform: translateY(-200%);
+    transition: opacity 0.2s, transform 0.8s;
+  }
+
+  .wrapper .inside .contents table {
+    text-align: left;
     width: 100%;
   }
-}
 
-/* html, body {
+  .wrapper .inside .contents h1,
+  .wrapper .inside .contents p,
+  .wrapper .inside .contents table {
+    color: white;
+  }
+
+  .wrapper .inside .contents p {
+    font-size: 13px;
+  }
+
+
+
+
+  body,
+  html {
+    height: 100%;
+  }
+
+
+  .flex-centerY-centerX {
+    justify-content: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+
+  body {
+    background-color: #f7f7f7;
+  }
+
+
+
+
+
+  /* Create three equal columns that floats next to each other */
+  .column {
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+    /* margin: 10px; */
+    height: 420px;
+    /* Should be removed. Only for demonstration */
+
+  }
+
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+  @media screen and (max-width: 600px) {
+    .column {
+      width: 100%;
+    }
+  }
+
+  /* html, body {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -268,109 +543,11 @@ body {
   font-family: "Helvetica", sans-serif;
 } */
 
-img {
-  max-width: 100%;
-}
-
-
-
-/* Slide container genel stil */
-.slider-container {
-  height: 65%; /* Bu değeri ihtiyaçlarınıza göre ayarlayabilirsiniz */
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  text-align: center;
-
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .23), inset 1px 1px 0 0 hsla(0, 0%, 100%, .2);
-}
-
-/* Slide container içindeki slide stil */
-.slide {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 100%;
-  z-index: 10;
-  background-size: cover;
-  background-position: center;
-  transition: left 0s .75s;
-}
-
-/* Slide radio buttonları kontrol edildiğinde uygulanacak stil */
-[id^="slide"]:checked + .slide {
-  left: 0;
-  z-index: 100;
-  transition: left .65s ease-out;
-}
-
-/* Slide resimlerinin stilleri */
-.slide-1 {
-  background-image: url("{% static 'images/1.jpg' %}");
-}
-.slide-2 {
-  background-image: url("{% static 'images/2.jpg' %}");
-}
-.slide-3 {
-  background-image: url("{% static 'images/3.jpg' %}");
-}
-.slide-4 {
-  background-image: url("{% static 'images/5.jpg' %}");
-}
-
-/* Menu stil */
-.menu {
-  position: absolute;
-  left: 0;
-  z-index: 900;
-  width: 100%;
-  bottom: 0;
-}
-
-.menu label {
-  cursor: pointer;
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  background: #fff;
-  border-radius: 50%;
-  margin: 0 .2em 1em;
-}
-
-.menu label:hover {
-  background: red;
-}
-
-/* Responsive layout */
-@media screen and (max-width: 600px) {
-  .column {
-    width: 100%;
+  img {
+    max-width: 100%;
   }
-}
 
-img {
-  max-width: 100%;
-}
-
-.slidecontainer {
-  margin-top: -5rem;
-  padding: 50px;
-}
-
-/* Ekran boyutuna göre slider'ın yüksekliğini ayarlama */
-@media (max-width: 1200px) {
-  .slider-container {
-    height: 45%; /* Daha küçük ekranlar için yükseklik artırılabilir */
-  }
-}
-
-@media (max-width: 768px) {
-  .slider-container {
-    height: 50%; /* Daha küçük ekranlar için yükseklik artırılabilir */
-  }
-}
-  </style>
+</style>
 
 <div class="demo">
   <div class="container">
@@ -413,145 +590,184 @@ img {
   </div>
 </div> 
 
-<div class="slidecontainer">
 
-  <div class="row">
-    <div class="col-md-12">
-      <div class="slider-container">
-        <div class="menu">
-          <label for="slide-dot-1"></label>
-          <label for="slide-dot-2"></label>
-          <label for="slide-dot-3"></label>
-          <label for="slide-dot-4"></label>
+<div class="row">
+  <section class="carousel" aria-label="Gallery">
+    <ol class="carousel__viewport">
+      <li id="carousel__slide1" tabindex="0" class="carousel__slide">
+        <div class="carousel__snapper">
+          <img src="{% static 'images/1.jpg' %}" alt="Slide 1">
+          <a href="#carousel__slide4" class="carousel__prev">Go to last slide</a>
+          <a href="#carousel__slide2" class="carousel__next">Go to next slide</a>
         </div>
-        
-        <input id="slide-dot-1" type="radio" name="slides" checked>
-          <div class="slide slide-1"></div>
-        
-        <input id="slide-dot-2" type="radio" name="slides">
-          <div class="slide slide-2"></div>
-        
-        <input id="slide-dot-3" type="radio" name="slides">
-          <div class="slide slide-3"></div>
-        <input id="slide-dot-4" type="radio" name="slides">
-          <div class="slide slide-4"></div>
-      </div>
-    </div>
-  </div>
-  </div>
+      </li>
+      <li id="carousel__slide2" tabindex="0" class="carousel__slide">
+        <div class="carousel__snapper">
+          <img src="{% static 'images/2.jpg' %}" alt="Slide 2">
+          <a href="#carousel__slide1" class="carousel__prev">Go to previous slide</a>
+          <a href="#carousel__slide3" class="carousel__next">Go to next slide</a>
+        </div>
+      </li>
+      <li id="carousel__slide3" tabindex="0" class="carousel__slide">
+        <div class="carousel__snapper">
+          <img src="{% static 'images/3.jpg' %}" alt="Slide 3">
+          <a href="#carousel__slide2" class="carousel__prev">Go to previous slide</a>
+          <a href="#carousel__slide4" class="carousel__next">Go to next slide</a>
+        </div>
+      </li>
+      <li id="carousel__slide4" tabindex="0" class="carousel__slide">
+        <div class="carousel__snapper">
+          <img src="{% static 'images/5.jpg' %}" alt="Slide 4">
+          <a href="#carousel__slide3" class="carousel__prev">Go to previous slide</a>
+          <a href="#carousel__slide1" class="carousel__next">Go to first slide</a>
+        </div>
+      </li>
+    </ol>
+    <aside class="carousel__navigation">
+      <ol class="carousel__navigation-list">
+        <li class="carousel__navigation-item">
+          <a href="#carousel__slide1" class="carousel__navigation-button">Go to slide 1</a>
+        </li>
+        <li class="carousel__navigation-item">
+          <a href="#carousel__slide2" class="carousel__navigation-button">Go to slide 2</a>
+        </li>
+        <li class="carousel__navigation-item">
+          <a href="#carousel__slide3" class="carousel__navigation-button">Go to slide 3</a>
+        </li>
+        <li class="carousel__navigation-item">
+          <a href="#carousel__slide4" class="carousel__navigation-button">Go to slide 4</a>
+        </li>
+      </ol>
+    </aside>
+  </section>
+</div>
+
+
 
 <div id="product-list">
-    {% if products %}
-    <br>
-    <header class="showcase">
-        <div class="showcase-content">
-            <div class="formm">
-                <br>
-                {% if products %}
-                <div class="row" style="display: flex; flex-wrap: wrap;">
-                    {% for p in products %}
-                    <div class="column">
-                        <div class="wrapper">
-                            <div class="container">
-                                <img class="img" src="{{ p.product_image.url }}" alt="product pic" height="300px" width="300px">
-                                <div class="bottom">
-                                    <div class="details">
-                                        <h3>{{ p.name }}</h3>
-                                        <p>${{ p.price }}</p>
-                                    </div>
-                                    <div class="buy">
-                                        <a href="{% url 'add-to-cart' p.id %}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" id="cart"><path fill="none" d="M0 0h48v48H0zm36.62 12L31.1 22z"></path><path d="M22 18h4v-6h6V8h-6V2h-4v6h-6v4h6v6zm-8 18c-2.21 0-3.98 1.79-3.98 4s1.77 4 3.98 4 4-1.79 4-4-1.79-4-4-4zm20 0c-2.21 0-3.98 1.79-3.98 4s1.77 4 3.98 4 4-1.79 4-4-1.79-4-4-4zm-19.65-6.5c0-.09.02-.17.06-.24l1.8-3.26h14.9c1.5 0 2.81-.83 3.5-2.06l7.72-14.02L38.83 8h-.01l-2.21 4-5.51 10H17.07l-.26-.54L12.32 12l-1.9-4-1.89-4H2v4h4l7.2 15.17-2.71 4.9c-.31.58-.49 1.23-.49 1.93 0 2.21 1.79 4 4 4h24v-4H14.85c-.28 0-.5-.22-.5-.5z"></path></svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="inside">
-                                <div class="icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="info"><g fill="#231f20"><path d="M8 2a6 6 0 1 0 6 6 6 6 0 0 0-6-6Zm0 11a5 5 0 1 1 5-5 5 5 0 0 1-5 5Z"></path><path d="M8 6.85a.5.5 0 0 0-.5.5v3.4a.5.5 0 0 0 1 0v-3.4a.5.5 0 0 0-.5-.5zM8 4.8a.53.53 0 0 0-.51.52v.08a.47.47 0 0 0 .51.47.52.52 0 0 0 .5-.5v-.12A.45.45 0 0 0 8 4.8z"></path></g></svg>
-                                </div>
-                                <div class="contents">
-                                    <table>
-                                        <tr>
-                                            <td>{{ p.description }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Stock</th>
-                                            <td>{{ p.stock_quantity }}</td>
-                                        </tr>
-                                        <!-- Add more rows as needed -->
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% if forloop.counter|divisibleby:"3" %}
+  {% if products %}
+  <br>
+  <header class="showcase">
+    <div class="showcase-content">
+      <div class="formm">
+        <br>
+        {% if products %}
+        <div class="row" style="display: flex; flex-wrap: wrap;">
+          {% for p in products %}
+          <div class="column">
+            <div class="wrapper">
+              <div class="container">
+                <img class="img" src="{{ p.product_image.url }}" alt="product pic" height="300px" width="300px">
+                <div class="bottom">
+                  <div class="details">
+                    <h3>{{ p.name }}</h3>
+                    <p>${{ p.price }}</p>
+                  </div>
+                  <div class="buy">
+                    <a href="{% url 'add-to-cart' p.id %}">
+                      <svg xmlns="http://www.w3.org/2000/svg" id="cart">
+                        <path fill="none" d="M0 0h48v48H0zm36.62 12L31.1 22z"></path>
+                        <path
+                          d="M22 18h4v-6h6V8h-6V2h-4v6h-6v4h6v6zm-8 18c-2.21 0-3.98 1.79-3.98 4s1.77 4 3.98 4 4-1.79 4-4-1.79-4-4-4zm20 0c-2.21 0-3.98 1.79-3.98 4s1.77 4 3.98 4 4-1.79 4-4-1.79-4-4-4zm-19.65-6.5c0-.09.02-.17.06-.24l1.8-3.26h14.9c1.5 0 2.81-.83 3.5-2.06l7.72-14.02L38.83 8h-.01l-2.21 4-5.51 10H17.07l-.26-.54L12.32 12l-1.9-4-1.89-4H2v4h4l7.2 15.17-2.71 4.9c-.31.58-.49 1.23-.49 1.93 0 2.21 1.79 4 4 4h24v-4H14.85c-.28 0-.5-.22-.5-.5z">
+                        </path>
+                      </svg>
+                    </a>
+                  </div>
                 </div>
-                <div class="row" style="display: flex; flex-wrap: wrap;">
-                    <br><br><br><br><br>
-                    {% endif %}
-                    {% endfor %}
+              </div>
+              <div class="inside">
+                <div class="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="info">
+                    <g fill="#231f20">
+                      <path d="M8 2a6 6 0 1 0 6 6 6 6 0 0 0-6-6Zm0 11a5 5 0 1 1 5-5 5 5 0 0 1-5 5Z"></path>
+                      <path
+                        d="M8 6.85a.5.5 0 0 0-.5.5v3.4a.5.5 0 0 0 1 0v-3.4a.5.5 0 0 0-.5-.5zM8 4.8a.53.53 0 0 0-.51.52v.08a.47.47 0 0 0 .51.47.52.52 0 0 0 .5-.5v-.12A.45.45 0 0 0 8 4.8z">
+                      </path>
+                    </g>
+                  </svg>
                 </div>
-                {% else %}
-                <p>No products available</p>
-                {% endif %}
+                <div class="contents">
+                  <table>
+                    <tr>
+                      <td>{{ p.description }}</td>
+                    </tr>
+                    <tr>
+                      <!-- <th>Stock</th>
+                      <td>{{ p.stock_quantity }}</td>
+                    </tr> -->
+                    <!-- Add more rows as needed -->
+                  </table>
+                </div>
+              </div>
             </div>
+          </div>
+          {% if forloop.counter|divisibleby:"3" %}
         </div>
-    </header>
-    {% else %}
-    <h3 style="text-align:center; color:#3E454C;">No Search Found</h3>
-    {% endif %}
+        <div class="row" style="display: flex; flex-wrap: wrap;">
+          <br><br><br><br><br>
+          {% endif %}
+          {% endfor %}
+        </div>
+        {% else %}
+        <p>No products available</p>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+  {% else %}
+  <h3 style="text-align:center; color:#3E454C;">No Search Found</h3>
+  {% endif %}
 </div>
 
 <script>
-  $(document).ready(function() {
-      function bindCategoryFilter() {
-          // Kategori filtresi
-          $('.category-filter').click(function(e) {
-              e.preventDefault();
-              var categoryId = $(this).data('category-id');
-              console.log("Category ID: ", categoryId);  // Debug için
-              $.ajax({
-                  url: '{% url "ajax_filter_products" %}',
-                  data: {
-                      'category_id': categoryId,
-                  },
-                  success: function(data) {
-                      $('#product-list').html(data.data);
-                      bindCategoryFilter();  // AJAX isteğinden sonra olayları yeniden bağla
-                  },
-                  error: function(xhr, status, error) {
-                      console.log("Error: ", error);  // Hata durumunda konsola yazdır
-                  }
-              });
-          });
-      }
-  
-      function bindSearchBar() {
-          // Arama çubuğu
-          $('#search-bar').on('input', function() {
-              var query = $(this).val();
-              console.log("Search Query: ", query);  // Debug için
-              $.ajax({
-                  url: '{% url "ajax_filter_products" %}',
-                  data: {
-                      'query': query,
-                  },
-                  success: function(data) {
-                      $('#product-list').html(data.data);
-                      bindCategoryFilter();  // AJAX isteğinden sonra olayları yeniden bağla
-                  },
-                  error: function(xhr, status, error) {
-                      console.log("Error: ", error);  // Hata durumunda konsola yazdır
-                  }
-              });
-          });
-      }
-  
-      bindCategoryFilter();
-      bindSearchBar();
+  $(document).ready(function () {
+    function bindCategoryFilter() {
+      // Kategori filtresi
+      $('.category-filter').click(function (e) {
+        e.preventDefault();
+        var categoryId = $(this).data('category-id');
+        console.log("Category ID: ", categoryId);  // Debug için
+        $.ajax({
+          url: '{% url "ajax_filter_products" %}',
+          data: {
+            'category_id': categoryId,
+          },
+          success: function (data) {
+            $('#product-list').html(data.data);
+            bindCategoryFilter();  // AJAX isteğinden sonra olayları yeniden bağla
+          },
+          error: function (xhr, status, error) {
+            console.log("Error: ", error);  // Hata durumunda konsola yazdır
+          }
+        });
+      });
+    }
+
+    function bindSearchBar() {
+      // Arama çubuğu
+      $('#search-bar').on('input', function () {
+        var query = $(this).val();
+        console.log("Search Query: ", query);  // Debug için
+        $.ajax({
+          url: '{% url "ajax_filter_products" %}',
+          data: {
+            'query': query,
+          },
+          success: function (data) {
+            $('#product-list').html(data.data);
+            bindCategoryFilter();  // AJAX isteğinden sonra olayları yeniden bağla
+          },
+          error: function (xhr, status, error) {
+            console.log("Error: ", error);  // Hata durumunda konsola yazdır
+          }
+        });
+      });
+    }
+
+    bindCategoryFilter();
+    bindSearchBar();
   });
-  </script>
+</script>
 
 
 

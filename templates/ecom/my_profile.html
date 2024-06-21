@@ -4,84 +4,253 @@
 
 
 <style media="screen">
-body {
-  margin: 0 auto;
-  padding: 0;
-}
+  @import url("https://fonts.googleapis.com/css?family=Montserrat:400,400i,700");
 
-.left {
-  left: 25px;
-}
-
-.right {
-  right: 25px;
-}
-
-.center {
-  text-align: center;
-}
-
-.bottom {
-  position: absolute;
-  bottom: 25px;
-}
-
-#card {
-  position: relative;
-  width: 700px;
-  height: 275px;
-  padding: 25px;
-  left: 50%;
-  top: 67.5px;
-  margin-left: -350px;
-  background: #E9E2D0;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-
-  z-index: 5;
-}
-
-#card img {
-  width: 150px;
-  float: left;
-  border-radius: 5px;
-  margin-right: 20px;
-}
-
-#card h2 {
-  font-family: courier;
-  color: #333;
-  margin: 0 auto;
-  padding: 0;
-  font-size: 15pt;
-}
-
-#card p {
-  font-family: courier;
-  color: #555;
-  font-size: 19px;
-}
-
-#card span {
-  font-family: courier;
-}
+  .card {
+    width: 100%;
+    background-color: #fff;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 2rem;
+    box-shadow: 0px 1rem 1.5rem rgba(0, 0, 0, 0.5);
+  }
+  
+  .card .banner {
+    background-image: url("https://images.unsplash.com/photo-1545703549-7bdb1d01b734?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 11rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  
+  .card .banner img {
+    background-color: #fff;
+    width: 8rem;
+    height: 8rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    transform: translateY(50%);
+    transition: transform 200ms cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  }
+  
+  .card .banner img:hover {
+    transform: translateY(50%) scale(1.3);
+  }
+  
+  .card .menu {
+    width: 100%;
+    height: 5.5rem;
+    padding: 1rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    position: relative;
+    box-sizing: border-box;
+  }
+  
+  .card .menu .opener {
+    width: 2.5rem;
+    height: 2.5rem;
+    position: relative;
+    border-radius: 50%;
+    transition: background-color 100ms ease-in-out;
+    cursor: pointer;
+  }
+  
+  .card .menu .opener:hover {
+    background-color: #f2f2f2;
+  }
+  
+  .card .menu .opener span {
+    background-color: #404040;
+    width: 0.4rem;
+    height: 0.4rem;
+    position: absolute;
+    top: 0;
+    left: calc(50% - 0.2rem);
+    border-radius: 50%;
+  }
+  
+  .card .menu .opener span:nth-child(1) {
+    top: 0.45rem;
+  }
+  
+  .card .menu .opener span:nth-child(2) {
+    top: 1.05rem;
+  }
+  
+  .card .menu .opener span:nth-child(3) {
+    top: 1.65rem;
+  }
+  
+  .card .menu .dropdown {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+  
+  .card .menu .dropdown a {
+    display: block;
+    padding: 10px;
+    text-align: left;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .card .menu .dropdown a:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .card h2.name {
+    text-align: center;
+    padding: 0 2rem 0.5rem;
+    margin: 0;
+  }
+  
+  .card .title {
+    color: #a0a0a0;
+    font-size: 0.85rem;
+    text-align: center;
+    padding: 0 2rem 1.2rem;
+  }
+  
+  .card .actions {
+    padding: 0 2rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    order: 99;
+  }
+  
+  .card .actions .follow-info {
+    padding: 0 0 1rem;
+    display: flex;
+  }
+  
+  .card .actions .follow-info h2 {
+    text-align: center;
+    width: 50%;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  .card .actions .follow-info h2 a {
+    text-decoration: none;
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.8rem;
+    transition: background-color 100ms ease-in-out;
+  }
+  
+  .card .actions .follow-info h2 a span {
+    color: #1c9eff;
+    font-weight: bold;
+    transform-origin: bottom;
+    transform: scaleY(1.3);
+    transition: color 100ms ease-in-out;
+  }
+  
+  .card .actions .follow-info h2 a small {
+    color: #afafaf;
+    font-size: 0.85rem;
+    font-weight: normal;
+  }
+  
+  .card .actions .follow-info h2 a:hover {
+    background-color: #f2f2f2;
+  }
+  
+  .card .actions .follow-info h2 a:hover span {
+    color: #007ad6;
+  }
+  
+  .card .actions .follow-btn button {
+    color: inherit;
+    font: inherit;
+    font-weight: bold;
+    background-color: #0a9dff;
+    width: 100%;
+    border: none;
+    padding: 1rem;
+    outline: none;
+    box-sizing: border-box;
+    border-radius: 1.5rem/50%;
+    transition: background-color 100ms ease-in-out, transform 200ms cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  }
+  
+  .card .actions .follow-btn button:hover {
+    background-color: #75c8ff;
+    transform: scale(1.1);
+  }
+  
+  .card .actions .follow-btn button:active {
+    background-color: #e8a200;
+    transform: scale(1);
+  }
+  
+  .card .desc {
+    text-align: justify;
+    padding: 0 2rem 2.5rem;
+    order: 100;
+  }
+  
 
 
 </style>
 <body>
-  
+
 <br><br><br>
-<div id="card">
-  <img src="{{ customer.profile_pic.url }}" alt="profile pic" />
-  <h2><b>{{request.user}}</b></h2>
-  <br>
-  <p><b> Address:</b> {{customer.address}}</p>
-  <p><b> Contact:</b> {{customer.mobile}}</p>
-  <a style="position:absolute; right: 5%; bottom: 10%;" id="editprofilee" href="/edit-profile" class="btn btn-primary btn-lg btn-edit"><span>Edit Profile</span></a>
+
+<div style="display: flex;justify-content:center">
+<div class="card">
+  <div class="banner">
+    <img src="{{ customer.profile_pic.url }}" alt="profile pic" />
+  </div>
+  <div class="menu">
+    <div class="opener" id="opener"><span></span><span></span><span></span></div>
+    <div class="dropdown" id="dropdown">
+      <a href="/logout">Logout</a>
+    </div>
+  </div>
+  <h2 class="name">{{request.user}}</h2>
+  <div class="title">MadTech Customer</div>
+  <div class="actions">
+
+    <div class="follow-btn">
+      <button><a href="/edit-profile" style="color:black;text-decoration:none">Edit Profile</a></button>
+    </div>
+  </div>
+  <div class="desc">
+    <p><b> Address:</b> {{customer.address}}</p>
+    <p><b> Contact Number:</b> {{customer.mobile}}</p>
+
+  </div>
 </div>
-<br><br><br><br><br><br>
+</div>
+
+
 </body>
 
-
+<script>
+  const opener = document.querySelector(".opener");
+  const dropdown = document.getElementById("dropdown");
+  
+  opener.addEventListener("click", () => {
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+  });
+</script>
 
 
 {% endblock content %}
