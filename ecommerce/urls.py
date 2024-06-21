@@ -23,13 +23,14 @@ app_name = 'ecom'
 
 urlpatterns = [
     path('category/<int:category_id>/', views.product_list_by_category, name='product_list_by_category'),
+    path('ajax/filter-products/', views.ajax_filter_products, name='ajax_filter_products'),
 
     
     path('admin/', admin.site.urls),
     path('',views.home_view,name=''),
     path('afterlogin', views.afterlogin_view,name='afterlogin'),
     path('logout', LogoutView.as_view(template_name='ecom/logout.html'),name='logout'),
-    path('aboutus', views.aboutus_view),
+    path('aboutus', views.aboutus_view,name="about"),
     path('contactus', views.contactus_view,name='contactus'),
     path('search', views.search_view,name='search'),
     path('send-feedback', views.send_feedback_view,name='send-feedback'),
@@ -89,3 +90,5 @@ urlpatterns = [
 
 
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

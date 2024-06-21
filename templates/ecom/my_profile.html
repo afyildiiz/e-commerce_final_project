@@ -71,7 +71,7 @@ body {
   
 <br><br><br>
 <div id="card">
-  <img src="{% static customer.profile_pic.url %}" alt="profile pic" />
+  <img src="{{ customer.profile_pic.url }}" alt="profile pic" />
   <h2><b>{{request.user}}</b></h2>
   <br>
   <p><b> Address:</b> {{customer.address}}</p>

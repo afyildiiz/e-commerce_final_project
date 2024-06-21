@@ -359,19 +359,35 @@ def send_feedback_view(request):
 # Bu fonksiyon, müşterinin giriş yapıp yapmadığını ve müşteri olup olmadığını kontrol eder.
 # Ardından, tüm ürünleri veritabanından çeker ve sepet içindeki ürünlerin sayısını çerezlerden okur.
 # Son olarak, bu bilgileri kullanarak customer_home.html şablonunu render eder.
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 @login_required(login_url='customerlogin')
 @user_passes_test(is_customer)
 def customer_home_view(request):
     categories = Category.objects.all()
-    products=models.Product.objects.all() #tüm ürünleri veritabanından aldık
-    if 'product_ids' in request.COOKIES: # eğer çerezlerde product_ids varsa
-        product_ids = request.COOKIES['product_ids'] # yeni bir değişkene idler atanır.
-        counter=product_ids.split('|') # ürün kimlikleri | karakteriyle ayrılarak bir listeye dönüştürülür
-        product_count_in_cart=len(set(counter)) # tekrarları listeden atarak ürün sayısı id üzerinden hesaplanır.
-    else: # ürün yoksa da 
-        product_count_in_cart=0 # sepetteki ürünleri sıfırla
-    return render(request,'ecom/customer_home.html',{'categories': categories,'products':products,'product_count_in_cart':product_count_in_cart})
+    products = Product.objects.all()
+    if 'product_ids' in request.COOKIES:
+        product_ids = request.COOKIES['product_ids']
+        counter = product_ids.split('|')
+        product_count_in_cart = len(set(counter))
+    else:
+        product_count_in_cart = 0
+    return render(request, 'ecom/customer_home.html', {'categories': categories, 'products': products, 'product_count_in_cart': product_count_in_cart})
 
+def ajax_filter_products(request):
+    category_id = request.GET.get('category_id')
+    query = request.GET.get('query')
+
+    products = Product.objects.all()
+
+    if category_id:
+        products = products.filter(category_id=category_id)
+    
+    if query:
+        products = products.filter(name__icontains=query)
+    
+    html = render_to_string('ecom/product_list.html', {'products': products})
+    return JsonResponse({'data': html})
 
 
 # sipariş öncesi tewslimat adresi
@@ -575,7 +591,8 @@ def edit_profile_view(request):
 #------------------------ ABOUT US AND CONTACT US VIEWS START --------------------
 #---------------------------------------------------------------------------------
 def aboutus_view(request):
-    return render(request,'ecom/aboutus.html')
+    categories = Category.objects.all()
+    return render(request,'ecom/aboutus.html', {categories:"categories"})
 
 def contactus_view(request):
     sub = forms.ContactusForm()

@@ -1,27 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ category.name }}</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Products in {{ category.name }}</h1>
-        <div class="row">
-            {% for product in products %}
-                <div class="col-md-4">
-                    <div class="thumbnail">
-                        <img src="{{ product.product_image.url }}" alt="{{ product.name }}">
-                        <div class="caption">
-                            <h3>{{ product.name }}</h3>
-                            <p>{{ product.description }}</p>
-                            <p>{{ product.price }}</p>
-                        </div>
-                    </div>
+<nav>
+    <ul>
+        <li>
+            <div class="dropdown">
+                <button class="dropbtn">Categories</button>
+                <div class="dropdown-content">
+                    {% for category in categories %}
+                        <a href="#" class="category-filter" data-category-id="{{ category.id }}">{{ category.name }}</a>
+                    {% endfor %}
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        </li>
+        <!-- Diğer navbar öğeleri -->
+    </ul>
+</nav>
+
+<!-- ecom/product_list.html -->
+{% for product in products %}
+    <div class="product-item">
+        <h3>{{ product.name }}</h3>
+        {% if product.product_image %}
+            <img src="{{ product.product_image.url }}" alt="{{ product.name }}">
+        {% else %}
+            <p>No image available</p>
+        {% endif %}
+        <p>{{ product.description }}</p>
+        <p>{{ product.price }}</p>
     </div>
-</body>
-</html>
+{% endfor %}
+
+<script>
+    $(document).ready(function() {
+        function bindCategoryFilter() {
+            // Kategori filtresi
+            $('.category-filter').click(function(e) {
+                e.preventDefault();
+                var categoryId = $(this).data('category-id');
+                console.log("Category ID: ", categoryId);  // Debug için
+                $.ajax({
+                    url: '{% url "ajax_filter_products" %}',
+                    data: {
+                        'category_id': categoryId,
+                    },
+                    success: function(data) {
+                        $('#product-list').html(data.data);
+                        bindCategoryFilter();  // AJAX isteğinden sonra olayları yeniden bağla
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Error: ", error);  // Hata durumunda konsola yazdır
+                    }
+                });
+            });
+        }
+    
+        function bindSearchBar() {
+            // Arama çubuğu
+            $('#search-bar').on('input', function() {
+                var query = $(this).val();
+                console.log("Search Query: ", query);  // Debug için
+                $.ajax({
+                    url: '{% url "ajax_filter_products" %}',
+                    data: {
+                        'query': query,
+                    },
+                    success: function(data) {
+                        $('#product-list').html(data.data);
+                        bindCategoryFilter();  // AJAX isteğinden sonra olayları yeniden bağla
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Error: ", error);  // Hata durumunda konsola yazdır
+                    }
+                });
+            });
+        }
+    
+        bindCategoryFilter();
+        bindSearchBar();
+    });
+    </script>

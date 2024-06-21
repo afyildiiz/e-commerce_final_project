@@ -66,7 +66,7 @@ facebook : fb.com/DOU.luv
 
       <tr>
         <td> {{p.name}}</td>
-        <td style="text-align: center;"> <img src="{% static p.product_image.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
+        <td style="text-align: center;"> <img src="{{ p.product_image.url }}" alt="Profile Pic" height="40px" width="40px" /></td>
         <td>{{p.price}} $</td>
         <td>{{p.description}}</td>
         <td>{{p.category}}</td>

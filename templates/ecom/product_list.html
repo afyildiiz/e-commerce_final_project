@@ -1,23 +1,62 @@
-{% extends 'ecom/for_product_list.html' %}
-
-{% block title %}{{ category.name }} - My E-commerce Site{% endblock %}
-
-{% block content %}
-<div class="container">
-    <h1>{{ category.name }} Kategorisindeki Ürünler</h1>
-    <div class="row">
-        {% for product in products %}
-        <div class="col-md-4">
-            <div class="thumbnail">
-                <img src="{{ product.product_image.url }}" alt="{{ product.name }}">
-                <div class="caption">
-                    <h3>{{ product.name }}</h3>
-                    <p>{{ product.description }}</p>
-                    <p>{{ product.price }}</p>
+<div id="product-list">
+    {% if products %}
+    <br>
+    <header class="showcase">
+        <div class="showcase-content">
+            <div class="formm">
+                <br>
+                {% if products %}
+                <div class="row" style="display: flex; flex-wrap: wrap;">
+                    {% for p in products %}
+                    <div class="column">
+                        <div class="wrapper">
+                            <div class="container">
+                                <img class="img" src="{{ p.product_image.url }}" alt="product pic" height="300px" width="300px">
+                                <div class="bottom">
+                                    <div class="details">
+                                        <h3>{{ p.name }}</h3>
+                                        <p>${{ p.price }}</p>
+                                    </div>
+                                    <div class="buy">
+                                        <a href="{% url 'add-to-cart' p.id %}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" id="cart"><path fill="none" d="M0 0h48v48H0zm36.62 12L31.1 22z"></path><path d="M22 18h4v-6h6V8h-6V2h-4v6h-6v4h6v6zm-8 18c-2.21 0-3.98 1.79-3.98 4s1.77 4 3.98 4 4-1.79 4-4-1.79-4-4-4zm20 0c-2.21 0-3.98 1.79-3.98 4s1.77 4 3.98 4 4-1.79 4-4-1.79-4-4-4zm-19.65-6.5c0-.09.02-.17.06-.24l1.8-3.26h14.9c1.5 0 2.81-.83 3.5-2.06l7.72-14.02L38.83 8h-.01l-2.21 4-5.51 10H17.07l-.26-.54L12.32 12l-1.9-4-1.89-4H2v4h4l7.2 15.17-2.71 4.9c-.31.58-.49 1.23-.49 1.93 0 2.21 1.79 4 4 4h24v-4H14.85c-.28 0-.5-.22-.5-.5z"></path></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="inside">
+                                <div class="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="info"><g fill="#231f20"><path d="M8 2a6 6 0 1 0 6 6 6 6 0 0 0-6-6Zm0 11a5 5 0 1 1 5-5 5 5 0 0 1-5 5Z"></path><path d="M8 6.85a.5.5 0 0 0-.5.5v3.4a.5.5 0 0 0 1 0v-3.4a.5.5 0 0 0-.5-.5zM8 4.8a.53.53 0 0 0-.51.52v.08a.47.47 0 0 0 .51.47.52.52 0 0 0 .5-.5v-.12A.45.45 0 0 0 8 4.8z"></path></g></svg>
+                                </div>
+                                <div class="contents">
+                                    <table>
+                                        <tr>
+                                            <td>{{ p.description }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Stock</th>
+                                            <td>{{ p.stock_quantity }}</td>
+                                        </tr>
+                                        <!-- Add more rows as needed -->
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if forloop.counter|divisibleby:"3" %}
                 </div>
+                <div class="row" style="display: flex; flex-wrap: wrap;">
+                    <br><br><br><br><br>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p>No products available</p>
+                {% endif %}
             </div>
         </div>
-        {% endfor %}
-    </div>
+    </header>
+    {% else %}
+    <h3 style="text-align:center; color:#3E454C;">No Search Found</h3>
+    {% endif %}
 </div>
-{% endblock %}
