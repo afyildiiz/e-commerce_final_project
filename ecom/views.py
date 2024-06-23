@@ -563,7 +563,9 @@ def download_invoice_view(request,orderID,productID):
 @user_passes_test(is_customer)
 def my_profile_view(request):
     customer=models.Customer.objects.get(user_id=request.user.id)
-    return render(request,'ecom/my_profile.html',{'customer':customer})
+    orders=models.Orders.objects.filter(customer=customer)
+    total_orders=orders.count()
+    return render(request,'ecom/my_profile.html',{'customer':customer,'total_orders': total_orders})
 
 
 @login_required(login_url='customerlogin')

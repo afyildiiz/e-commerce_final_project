@@ -434,8 +434,8 @@
 
   .wrapper .inside .icon {
     position: absolute;
-    right: 85px;
-    top: 85px;
+    right: 80px;
+    top: 75px;
     color: white;
     opacity: 1;
   }
@@ -549,49 +549,10 @@
 
 </style>
 
-<div class="demo">
-  <div class="container">
-      <div class="row">
-          <div class="col-md-12">
-              <nav class="navbar navbar-mobile bootsnav on" style="display:flex;justify-content:center;color:black">
-                  <div class="navbar-header">
-                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
-                          <i class="fa fa-bars"></i>
-                      </button>
-                  </div>
-                  <div class="collapse navbar-collapse" id="navbar-menu">
-                      <ul class="nav navbar-nav" data-in="fadeInDown" data-out="fadeOutUp">
-                          <li class="active"><a href="/" data-hover="Home">Home <span data-hover="Home"></span></a></li>
-                          <li><a href="/aboutus" data-hover="About">About <span data-hover="About"></span></a></li>
-                          <li class="dropdown">
-                              <a href="/customer-home" class="dropdown-toggle" data-toggle="dropdown" data-hover="Categories">Categories <span data-hover="Categories"></span></a>
-                              <ul class="dropdown-menu animated">
-                                  <li class="dropdown">
-
-                                  {% for category in categories %}
-                                    
-                                    <ul class="dropdown-menu animated dropdown-content">
-                                      {% for category in categories %}
-                                          <li><a href="#" class="category-filter" data-category-id="{{ category.id }}">{{ category.name }}</a></li>
-                                      {% endfor %}
-                                    </ul>
-                                  </li>
-                                  {% endfor %}
-                              </ul>
-                          </li>
-                          <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="Pages">Contact Us <span data-hover="Pages"></span></a>
-                          </li>
-                      </ul>
-                  </div>
-              </nav>
-          </div>
-      </div>
-  </div>
-</div> 
 
 
-<div class="row">
+
+<div class="row" style="margin-top: 5rem;">
   <section class="carousel" aria-label="Gallery">
     <ol class="carousel__viewport">
       <li id="carousel__slide1" tabindex="0" class="carousel__slide">
@@ -643,6 +604,18 @@
 </div>
 
 
+<div class="row" style="display: flex; justify-content:center; margin-top: 50px;">
+  <div class="dropdown">
+      <!-- <b><a class="dropdown-toggle" href="#" title="Filter">Filter
+          <img width="25" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB/klEQVR4nO2ZO0gcURSGv3U3ImGbbUQFxRQKSWHANBF8FDEQbGKjVWySTgsxVdAmpZ2pTBULsbMSC7GICBJioY1VwBQRhYiCaIwvfNwwcCbcRnd2d2b2jNwPplnu+c/591xm7z0LDt0sASYhz8pdRkzCnlvJu0AJJqiRHHrJBTHyTRZ8B7LoIyu1eTWu37WwGvghC78CVeihEliQ2jaB2nwB9cAvCZgDHlB+0sCs1LQNNAYNbAJ+S+AMUEH5SAFTUsse8LhQgRbgQASmRDBuUsBnqeEQaC1W6DlwLEKfiJ9xyX0CdJQq9gI4E8FR4mNMcl4Ar8ISfQ1civB7omdIcl0BfWGLvwGugRvgHdExYOV5G1WSQeub6o9Av9fq/AgRM2rt3Z4QdbuBc9H+QMxvk1OgMwS9NuvtOEHM7/dJSXwEPCtB66n1ezVJGfDMfJEC9oEnRWg0A7saThBp6wy0AzwqILYB2LLOdBkUnUp/AnUBYtSesh/KHbrQq+qqxntPrggjam+iJuCdX/1swDgjyjCuI8owriPKMK4jyjCuI8owriPKMK4jyjD3rSPtAdepZVkK9Mad00BNUo1kgGGZdXmF/gU+yoAiUUZ8aqQjN1KwNzF5mUQjPt44dcMqfF7+o0ycEX+7jVjb7U9Sjdy23RJrxKcLWAMW/3/iuIf8A6CVNVOPYxZnAAAAAElFTkSuQmCC">
+      </a></b> -->
+      <ul style="display: flex;justify-content:center">
+          {% for category in categories %}
+              <li class="dropdown-toggle"><a href="#" class="category-filter" data-category-id="{{ category.id }}">{{ category.name }}</a></li>
+          {% endfor %}
+      </ul>
+  </div>
+</div>
 
 <div id="product-list">
   {% if products %}
@@ -678,13 +651,15 @@
               <div class="inside">
                 <div class="icon">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="info">
-                    <g fill="#231f20">
+                    <g fill="#ffff">
                       <path d="M8 2a6 6 0 1 0 6 6 6 6 0 0 0-6-6Zm0 11a5 5 0 1 1 5-5 5 5 0 0 1-5 5Z"></path>
                       <path
                         d="M8 6.85a.5.5 0 0 0-.5.5v3.4a.5.5 0 0 0 1 0v-3.4a.5.5 0 0 0-.5-.5zM8 4.8a.53.53 0 0 0-.51.52v.08a.47.47 0 0 0 .51.47.52.52 0 0 0 .5-.5v-.12A.45.45 0 0 0 8 4.8z">
                       </path>
                     </g>
                   </svg>
+                  <p style="font-size: 8px;color:black">description</p>
+
                 </div>
                 <div class="contents">
                   <table>
