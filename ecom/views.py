@@ -88,12 +88,9 @@ def afterlogin_view(request):
 #---------------------------------------------------------------------------------
 @login_required(login_url='adminlogin')
 def admin_dashboard_view(request):
-    # for cards on dashboard
     customercount=models.Customer.objects.all().count()
     productcount=models.Product.objects.all().count()
     ordercount=models.Orders.objects.all().count()
-
-    # for recent order tables
     orders=models.Orders.objects.all()
     ordered_products=[]
     ordered_bys=[]
@@ -283,7 +280,7 @@ def add_to_cart_view(request, pk):
 
 
 
-# for checkout of cart
+# sepet görüntüleme
 def cart_view(request):
     #for cart counter
     if 'product_ids' in request.COOKIES:
@@ -294,6 +291,7 @@ def cart_view(request):
         product_count_in_cart=0
 
     # fetching product details from db whose id is present in cookie
+    # idsi çerezde olan product özelliklerini db'den  çekme 
     products=None
     total=0
     if 'product_ids' in request.COOKIES:
@@ -302,7 +300,7 @@ def cart_view(request):
             product_id_in_cart=product_ids.split('|')
             products=models.Product.objects.all().filter(id__in = product_id_in_cart)
 
-            #for total price shown in cart
+            # toplam tutarın sepette görünmesi için
             for p in products:
                 total=total+p.price
     return render(request,'ecom/cart.html',{'products':products,'total':total,'product_count_in_cart':product_count_in_cart})
@@ -487,7 +485,6 @@ def payment_success_view(request):
 @login_required(login_url='customerlogin')
 @user_passes_test(is_customer)
 def my_order_view(request):
-    
     customer=models.Customer.objects.get(user_id=request.user.id)
     orders=models.Orders.objects.all().filter(customer_id = customer)
     ordered_products=[]

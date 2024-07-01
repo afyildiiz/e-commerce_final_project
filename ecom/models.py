@@ -28,6 +28,7 @@ class Category(models.Model):
     
     def __str__(self):
         return self.name
+
     
 class Supplier(models.Model):
     email = models.EmailField(unique=True,db_index=True, validators=[email_regex])
@@ -46,7 +47,6 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     
-
 
 
 class Orders(models.Model):

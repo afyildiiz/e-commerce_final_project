@@ -1,6 +1,6 @@
 """
 
-Developed By : DOU kumar
+Developed By : DOU
 facebook : fb.com/DOU.luv
 Youtube :youtube.com/lazycoders
 
